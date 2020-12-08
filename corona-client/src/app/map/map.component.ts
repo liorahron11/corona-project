@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewerConfiguration } from 'angular-cesium';
+import { CameraService, ViewerConfiguration } from 'angular-cesium';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [ViewerConfiguration], // Don't forget to Provide it
+  providers: [ViewerConfiguration, CameraService],
 })
 export class MapComponent implements OnInit {
-  constructor(private viewerConf: ViewerConfiguration) {
-    // viewerOptions will be passed the Cesium.Viewer contstuctor
+  constructor(
+    private viewerConf: ViewerConfiguration,
+    private cameraService: CameraService
+  ) {
     viewerConf.viewerOptions = {
       selectionIndicator: false,
       timeline: false,
@@ -24,6 +26,20 @@ export class MapComponent implements OnInit {
       navigationInstructionsInitiallyVisible: false,
       mapMode2D: Cesium.MapMode2D.ROTATE,
     };
+
+    const west = 30.0;
+    const south = 27.0;
+    const east = 40.0;
+    const north = 35.0;
+    const israelLocation = Cesium.Rectangle.fromDegrees(
+      west,
+      south,
+      east,
+      north
+    );
+
+    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.01;
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE = israelLocation;
 
     // Will be called on viewer initialistion
     viewerConf.viewerModifier = (viewer: any) => {

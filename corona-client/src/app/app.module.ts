@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   AngularCesiumModule,
   AngularCesiumWidgetsModule,
+  CesiumService,
 } from 'angular-cesium';
 import { MapComponent } from './map/map.component';
 
@@ -19,11 +20,10 @@ import { MapComponent } from './map/map.component';
     BrowserAnimationsModule,
     MatGridListModule,
     FlexLayoutModule,
-    AngularCesiumModule,
     AngularCesiumModule.forRoot(),
     AngularCesiumWidgetsModule,
   ],
-  providers: [],
+  providers: [CesiumService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
