@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
       baseLayerPicker: false,
       animation: false,
       shouldAnimate: false,
-      homeButton: false,
+      homeButton: true,
       geocoder: false,
       navigationHelpButton: false,
       navigationInstructionsInitiallyVisible: false,
@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
     };
 
     const west = 30.0;
-    const south = 27.0;
+    const south = 28.0;
     const east = 40.0;
     const north = 35.0;
     const israelLocation = Cesium.Rectangle.fromDegrees(
@@ -37,15 +37,13 @@ export class MapComponent implements OnInit {
       east,
       north
     );
-
-    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.01;
+    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.005;
     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = israelLocation;
 
     // Will be called on viewer initialistion
     viewerConf.viewerModifier = (viewer: any) => {
-      // Remove default double click zoom behaviour
-      viewer.screenSpaceEventHandler.removeInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+      var layer = viewer.imageryLayers.addImageryProvider(
+        new Cesium.IonImageryProvider({ assetId: 3 })
       );
     };
   }
