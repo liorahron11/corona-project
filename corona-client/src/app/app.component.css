@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+}
+
+.scroll1 {
+  background-color: #009169;
+  flex-basis: 45vh;
+  width: 30vw;
+}
+
+.map {
+  background-color: #55b296;
+  flex: 0 0 70%;
+  height: 90vh;
+}
+
+.navbar {
+  background-color: #9fd3c3;
+  flex: 0 0 100%;
+  height: 10vh;
+}
+
+.scroll2 {
+  background-color: #e7b013;
+  flex-basis: 45vh;
+  width: 30vw;
+}
