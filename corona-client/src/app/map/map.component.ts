@@ -43,7 +43,7 @@ export class MapComponent implements OnInit {
     // Will be called on viewer initialistion
     viewerConf.viewerModifier = (viewer: any) => {
       var layer = viewer.imageryLayers.addImageryProvider(
-        new Cesium.IonImageryProvider({ assetId: 3 })
+        new Cesium.IonImageryProvider({ assetId: 4 })
       );
     };
   }

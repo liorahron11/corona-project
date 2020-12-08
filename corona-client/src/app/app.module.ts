@@ -11,9 +11,12 @@ import {
   CesiumService,
 } from 'angular-cesium';
 import { MapComponent } from './map/map.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderComponent } from './header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent],
+  declarations: [AppComponent, MapComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,6 +25,8 @@ import { MapComponent } from './map/map.component';
     FlexLayoutModule,
     AngularCesiumModule.forRoot(),
     AngularCesiumWidgetsModule,
+    MatToolbarModule,
+    FontAwesomeModule,
   ],
   providers: [CesiumService],
   bootstrap: [AppComponent],
