@@ -16,9 +16,15 @@ import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ScrollerComponent } from './scroller/scroller.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, HeaderComponent, ScrollerComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    HeaderComponent,
+    ScrollerComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,6 +36,7 @@ import { ScrollerComponent } from './scroller/scroller.component';
     MatToolbarModule,
     FontAwesomeModule,
     ScrollingModule,
+    MatListModule,
   ],
   providers: [CesiumService],
   bootstrap: [AppComponent],

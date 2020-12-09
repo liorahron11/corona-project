@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatListOption } from '@angular/material/list';
 
 @Component({
   selector: 'app-scroller',
@@ -12,4 +13,8 @@ export class ScrollerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  itemClicked(options: MatListOption[]) {
+    console.log(options.map((o) => o.value)[0]);
+  }
 }
