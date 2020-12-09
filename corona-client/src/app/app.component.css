@@ -15,11 +15,11 @@
 }
 
 .map {
-  flex: 0 0 70%;
+  flex: 0 0 80%;
   height: 90vh;
 }
 
 .scroll {
-  height: 45vh;
-  width: 30vw;
+  height: 50%;
+  width: 20vw;
 }
