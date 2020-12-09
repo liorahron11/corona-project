@@ -1,7 +1,6 @@
 .example-viewport {
-  height: 100%;
+  height: 35vh;
   width: 20vw;
-  border: 1px solid black;
 }
 
 .example-item {

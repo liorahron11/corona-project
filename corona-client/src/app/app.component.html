@@ -1,8 +1,19 @@
 <div id="container">
-  <div class="navbar"><app-header></app-header></div>
+  <div class="navbar">
+    <app-header
+      title="עדכון אזורי התפרצות קורונה"
+      [icon]="virusIcon"
+    ></app-header>
+  </div>
   <div class="map"><app-map></app-map></div>
   <div id="scrollsContainer">
-    <div class="scroll"><app-scroller></app-scroller></div>
-    <div class="scroll"><app-scroller></app-scroller></div>
+    <div class="scroll">
+      <app-header class="scrollHeader" title="מקומות חדשים להוספה"></app-header>
+      <app-scroller></app-scroller>
+    </div>
+    <div class="scroll">
+      <app-header class="scrollHeader" title="מיקומי התפרצות"></app-header>
+      <app-scroller></app-scroller>
+    </div>
   </div>
 </div>
