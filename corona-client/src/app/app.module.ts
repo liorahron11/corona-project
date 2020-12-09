@@ -14,9 +14,17 @@ import { MapComponent } from './map/map.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollerComponent } from './scroller/scroller.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    HeaderComponent,
+    ScrollerComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +35,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularCesiumWidgetsModule,
     MatToolbarModule,
     FontAwesomeModule,
+    ScrollingModule,
+    MatListModule,
   ],
   providers: [CesiumService],
   bootstrap: [AppComponent],
