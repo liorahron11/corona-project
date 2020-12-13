@@ -24,6 +24,7 @@
 .map {
   flex: 0 0 80%;
   height: 90vh;
+  position: relative;
 }
 
 .scroll {

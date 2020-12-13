@@ -1,0 +1,15 @@
+<mat-selection-list
+  #itemsList
+  [multiple]="false"
+  (selectionChange)="itemClicked(itemsList.selectedOptions.selected)"
+>
+  <mat-list-option
+    *ngFor="let item of items"
+    class="example-item"
+    [value]="item"
+  >
+    {{ item }}
+  </mat-list-option>
+</mat-selection-list>
+
+<h3 *ngIf="!items.length">אין עוד ערים להצגה</h3>

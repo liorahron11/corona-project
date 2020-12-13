@@ -5,15 +5,31 @@
       [icon]="virusIcon"
     ></app-header>
   </div>
-  <div class="map"><app-map></app-map></div>
+  <div class="map">
+    <button
+      (click)="toggleAddMode()"
+      mat-fab
+      color="primary"
+      style="
+        position: absolute;
+        top: 3vh;
+        bottom: auto;
+        left: 1vw;
+        z-index: 10;
+        font-size: 1.5em;
+      "
+    >
+      <fa-icon [icon]="plusIcon"></fa-icon>
+    </button>
+    <app-map></app-map>
+  </div>
   <div id="scrollsContainer">
     <div class="scroll">
       <app-header class="scrollHeader" title="מקומות חדשים להוספה"></app-header>
-      <app-scroller></app-scroller>
     </div>
     <div class="scroll">
-      <app-header class="scrollHeader" title="מיקומי התפרצות"></app-header>
-      <app-scroller></app-scroller>
+      <app-header class="scrollHeader" title="מקומות שמורים"></app-header>
+      <app-scroller [items]="newPlaces"></app-scroller>
     </div>
   </div>
 </div>

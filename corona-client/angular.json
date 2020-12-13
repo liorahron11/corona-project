@@ -29,9 +29,11 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "./node_modules/cesium/Build/Cesium/Widgets/widgets.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/theme.less"
             ],
             "scripts": ["./node_modules/cesium/Build/Cesium/Cesium.js"]
           },
@@ -99,6 +101,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "./node_modules/cesium/Build/Cesium/Widgets/widgets.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"

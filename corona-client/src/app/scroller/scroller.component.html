@@ -1,15 +1,3 @@
 <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-  <mat-selection-list
-    #itemsList
-    [multiple]="false"
-    (selectionChange)="itemClicked(itemsList.selectedOptions.selected)"
-  >
-    <mat-list-option
-      *cdkVirtualFor="let item of items"
-      class="example-item"
-      [value]="item"
-    >
-      {{ item }}
-    </mat-list-option>
-  </mat-selection-list>
+  <app-list [items]="items"></app-list>
 </cdk-virtual-scroll-viewport>
