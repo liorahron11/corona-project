@@ -20,7 +20,6 @@ import { Store } from '@ngrx/store';
 })
 export class MapComponent implements OnInit {
   @Output() openEditWindowEvent = new EventEmitter<string>();
-  entities;
   eventbusSub: Subscription;
   pickMarker;
 
@@ -108,7 +107,7 @@ export class MapComponent implements OnInit {
               console.log('lat: ', latitudeString);
               console.log('alt: ', heightString);
 
-              this.entities = markersService.addMarker(
+              markersService.addMarker(
                 longitudeString + latitudeString,
                 longitudeString.substring(1, 5) +
                   latitudeString.substring(1, 6),
@@ -136,9 +135,11 @@ export class MapComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-    this.entities = this.markersService.getUpdatedMap();
-  }
+  ngOnInit(): void {}
+
+  loadMap = () => {
+    return this.markersService.getUpdatedMap();
+  };
 
   openEditWindow(): void {
     this.openEditWindowEvent.next();

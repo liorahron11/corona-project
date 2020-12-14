@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { City } from '../city';
 import { MarkersService } from '../markers.service';
+import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
 
 @Component({
   selector: 'app-marker-details',
@@ -21,5 +22,6 @@ export class MarkerDetailsComponent implements OnInit {
 
   remove = () => {
     this.markersService.deleteMarker(this.currentItem.id);
+    this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
   };
 }
