@@ -25,8 +25,11 @@
     "@fortawesome/angular-fontawesome": "^0.8.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@ngrx/store": "^10.1.0",
+    "@ngrx/store-devtools": "^10.1.0",
     "angular-cesium": "0.0.66",
     "cesium": "^1.76.0",
+    "ng-zorro-antd": "^10.2.0",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
