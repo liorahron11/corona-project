@@ -1,7 +1,7 @@
 import { Cesium3DTile } from 'cesium';
 
 export interface City {
-  id: number;
+  id: string;
   name: string;
   position: any;
   flyPosition: any;

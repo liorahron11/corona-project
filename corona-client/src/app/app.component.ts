@@ -14,7 +14,7 @@ export class AppComponent {
   virusIcon = faShieldVirus;
   plusIcon = faPlus;
   newPlaces: string;
-  outbreakPlaces = [];
+  editDetails: boolean = false;
 
   constructor(private store: Store, private eventbus: EventBusService) {}
 
@@ -23,19 +23,35 @@ export class AppComponent {
       .select(selectList)
       .subscribe(
         (subscriber) =>
-          (this.newPlaces = subscriber["list"].map((city) => city.name))
+          (this.newPlaces = subscriber['list'].map((city) => city.name))
+      );
+
+    this.store
+      .select(selectList)
+      .subscribe(
+        (subscriber) =>
+          (this.newPlaces = subscriber['savedList'].map((city) => city.name))
       );
   }
 
   toggleAddMode = () => {
-    let addMode: boolean;
+    let addMode;
 
     this.store
       .select((state) => state)
-      .subscribe((subscriber) => (addMode = subscriber["list"].addMode));
+      .subscribe((subscriber) => (addMode = subscriber['list'].addMode));
 
     this.store.dispatch(changeAddMode({ addMode: !addMode }));
 
     this.eventbus.emit(new EmitEvent(Events.ToggleAddMode));
+  };
+
+  turnOffAddMode = () => {
+    this.editDetails = false;
+    this.store.dispatch(changeAddMode({ addMode: this.editDetails }));
+  };
+
+  turnOnEditMode = () => {
+    this.editDetails = true;
   };
 }

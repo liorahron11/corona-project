@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../markers.service';
 import { EventBusService, Events } from '../event-bus.service';
@@ -13,6 +19,7 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit {
+  @Output() openEditWindowEvent = new EventEmitter<string>();
   entities;
   eventbusSub: Subscription;
   pickMarker;
@@ -102,7 +109,7 @@ export class MapComponent implements OnInit {
               console.log('lat: ', latitudeString);
               console.log('alt: ', heightString);
 
-              markersService.addMarker(
+              this.entities = markersService.addMarker(
                 longitudeString + latitudeString,
                 longitudeString.substring(1, 5) +
                   latitudeString.substring(1, 6),
@@ -119,6 +126,7 @@ export class MapComponent implements OnInit {
               );
               viewer._container.style.cursor = 'default';
               canvas.removeEventListener('click', this.pickMarker);
+              this.openEditWindow();
             })
           );
         }
@@ -127,6 +135,10 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.entities = this.markersService.updatedMap();
+    this.entities = this.markersService.getUpdatedMap();
+  }
+
+  openEditWindow(): void {
+    this.openEditWindowEvent.next();
   }
 }

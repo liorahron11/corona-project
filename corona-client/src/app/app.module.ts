@@ -18,7 +18,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ScrollerComponent } from './scroller/scroller.component';
 import { MatListModule } from '@angular/material/list';
 import { ListComponent } from './list/list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
@@ -32,6 +32,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import * as fromOutbreakList from './store/outbreak-list.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { AddNewMarkerComponent } from './add-new-marker/add-new-marker.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 registerLocaleData(en);
 
@@ -43,6 +46,7 @@ registerLocaleData(en);
     ScrollerComponent,
     ListComponent,
     MapMarkerComponent,
+    AddNewMarkerComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +70,9 @@ registerLocaleData(en);
     }),
     MatButtonModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   providers: [CesiumService, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

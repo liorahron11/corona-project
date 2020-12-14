@@ -21,11 +21,15 @@
     >
       <fa-icon [icon]="plusIcon"></fa-icon>
     </button>
-    <app-map></app-map>
+    <app-map (openEditWindowEvent)="turnOnEditMode()"></app-map>
   </div>
   <div id="scrollsContainer">
     <div class="scroll">
       <app-header class="scrollHeader" title="מקומות חדשים להוספה"></app-header>
+      <app-add-new-marker
+        (closeAddWindowEvent)="turnOffAddMode()"
+        *ngIf="editDetails"
+      ></app-add-new-marker>
     </div>
     <div class="scroll">
       <app-header class="scrollHeader" title="מקומות שמורים"></app-header>

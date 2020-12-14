@@ -8,6 +8,8 @@ export const set = createAction(
 
 export const add = createAction('[OutbreakList] Add', props<{ item: City }>());
 
+export const save = createAction('[SavedList] save', props<{ item: City }>());
+
 export const remove = createAction(
   '[OutbreakList] Remove',
   props<{ id: string }>()
