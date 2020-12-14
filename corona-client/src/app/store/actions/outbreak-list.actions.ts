@@ -19,3 +19,8 @@ export const changeAddMode = createAction(
   '[OutbreakList] changeAddMode',
   props<{ addMode: boolean }>()
 );
+
+export const changeCurrentItem = createAction(
+  '[currentItem] changeCurrentItem',
+  props<{ currentItem: City }>()
+);
