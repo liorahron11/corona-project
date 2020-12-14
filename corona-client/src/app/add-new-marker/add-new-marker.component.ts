@@ -3,13 +3,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { City } from '../city';
 import { MarkersService } from '../markers.service';
-import {
-  add,
-  changeAddMode,
-  remove,
-  save,
-} from '../store/actions/outbreak-list.actions';
+import { changeAddMode, save } from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-add-new-marker',
@@ -21,7 +18,11 @@ export class AddNewMarkerComponent implements OnInit {
   name = new FormControl('', [Validators.required]);
   currentItem: City;
 
-  constructor(private store: Store, private markersService: MarkersService) {}
+  constructor(
+    private store: Store,
+    private markersService: MarkersService,
+    private snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     let list = [];
@@ -50,6 +51,7 @@ export class AddNewMarkerComponent implements OnInit {
 
       this.store.dispatch(save({ item: newMarker }));
       this.closeWindow();
+      this.snackbar.openFromComponent(SnackbarComponent);
     }
   };
 

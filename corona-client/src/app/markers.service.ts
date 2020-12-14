@@ -38,7 +38,7 @@ export class MarkersService {
   getUpdatedMap = () => {
     return this.initMarkers().pipe(
       map((entity) =>
-        entity['list'].map((item) => ({
+        entity['savedList'].map((item) => ({
           id: item.id,
           actionType: ActionType.ADD_UPDATE,
           entity: item,

@@ -35,6 +35,8 @@ import { environment } from '../environments/environment';
 import { AddNewMarkerComponent } from './add-new-marker/add-new-marker.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 registerLocaleData(en);
 
@@ -47,6 +49,7 @@ registerLocaleData(en);
     ListComponent,
     MapMarkerComponent,
     AddNewMarkerComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,7 @@ registerLocaleData(en);
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   providers: [CesiumService, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
