@@ -1,0 +1,9 @@
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+  direction: rtl;
+}
+
+.buttonsFlex {
+  display: flex;
+  justify-content: space-evenly;
+}

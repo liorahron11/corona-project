@@ -5,7 +5,7 @@ const DEFAULT_FLY_POSITION: number = 50000;
 
 export const CITIES: City[] = [
   {
-    id: 1,
+    id: '1',
     name: 'באר שבע',
     position: Cesium.Cartesian3.fromDegrees(
       34.7938276617,
@@ -19,7 +19,7 @@ export const CITIES: City[] = [
     ),
   },
   {
-    id: 2,
+    id: '2',
     name: 'תל אביב',
     position: Cesium.Cartesian3.fromDegrees(
       34.7759582415,
@@ -33,7 +33,7 @@ export const CITIES: City[] = [
     ),
   },
   {
-    id: 3,
+    id: '3',
     name: 'חיפה',
     position: Cesium.Cartesian3.fromDegrees(
       34.9813095846,
@@ -47,7 +47,7 @@ export const CITIES: City[] = [
     ),
   },
   {
-    id: 4,
+    id: '4',
     name: 'ירושלים',
     position: Cesium.Cartesian3.fromDegrees(
       35.2233397574,
@@ -61,7 +61,7 @@ export const CITIES: City[] = [
     ),
   },
   {
-    id: 5,
+    id: '5',
     name: 'אילת',
     position: Cesium.Cartesian3.fromDegrees(
       34.9494684182,

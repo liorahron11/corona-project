@@ -33,4 +33,5 @@ export class EmitEvent {
 export enum Events {
   MarkerSelect,
   ToggleAddMode,
+  UpdateMap,
 }

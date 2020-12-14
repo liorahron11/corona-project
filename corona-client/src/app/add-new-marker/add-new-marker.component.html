@@ -1,0 +1,14 @@
+<div dir="rtl" class="example-container">
+  <mat-form-field appearance="standard" name="form">
+    <mat-label>שם:</mat-label>
+    <input matInput [formControl]="name" required />
+    <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+
+  <p>מיקום: {{ currentItem.position }}</p>
+
+  <div class="buttonsFlex">
+    <button mat-raised-button color="primary" (click)="save()">שמור</button>
+    <button mat-stroked-button color="primary" (click)="cancel()">ביטול</button>
+  </div>
+</div>
