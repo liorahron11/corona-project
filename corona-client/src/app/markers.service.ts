@@ -39,12 +39,20 @@ export class MarkersService {
     return this.initMarkers().pipe(
       map((entity) =>
         entity['savedList'].map((item) => ({
-          id: item.id,
+          id: item._id,
           actionType: ActionType.ADD_UPDATE,
           entity: item,
         }))
       ),
       mergeAll()
+    );
+  };
+
+  parsePosition = (position) => {
+    return Cesium.Cartesian3.fromDegrees(
+      position.lon,
+      position.lat,
+      position.alt
     );
   };
 }

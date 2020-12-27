@@ -11,15 +11,19 @@ export interface State {
 }
 
 const initialState: State = {
-  list: CITIES,
-  savedList: CITIES,
+  list: [],
+  savedList: [],
   addMode: false,
   currentItem: undefined,
 };
 
 export const outbreakListReducer = createReducer(
   initialState,
-  on(OutbreakListActions.set, (state, { list }) => ({ ...state, list: list })),
+  on(OutbreakListActions.set, (state, { list, savedList }) => ({
+    ...state,
+    list: list,
+    savedList: savedList,
+  })),
   on(OutbreakListActions.add, (state, { item }) => ({
     ...state,
     list: addItem(state.list, item),
@@ -54,7 +58,8 @@ const addItem = (array, item) => {
 
 const removeItem = (array, id: string) => {
   let tempArr = [...array];
-  const index = array.findIndex((item) => item.id === id);
+
+  const index = array.findIndex((item) => item['_id'] === id);
 
   if (index > -1) {
     tempArr.splice(index, 1);
