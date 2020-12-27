@@ -1,8 +1,8 @@
-<ac-layer acFor="let entity of entities" [context]="this">
+<ac-layer acFor="let entity of entities" [context]="this" debug="[true]">
   <ac-billboard-desc
     props="{ position: entity.position,
-                          image : 'https://www.iconsdb.com/icons/preview/purple/map-marker-2-xxl.png',
-                          scale: 0.1,
+                          image : '{{ mapMarker }}',
+                          scale: 0.8,
                                                       }"
   >
   </ac-billboard-desc>
