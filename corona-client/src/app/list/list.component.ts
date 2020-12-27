@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { EventBusService, EmitEvent, Events } from '../event-bus.service';
+import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
 
 @Component({
@@ -30,5 +31,7 @@ export class ListComponent implements OnInit {
     const cityClicked = cityList.find((city) => city.name === this.currentItem);
 
     this.eventbus.emit(new EmitEvent(Events.MarkerSelect, cityClicked));
+
+    this.store.dispatch(changeCurrentItem({ currentItem: cityClicked }));
   };
 }

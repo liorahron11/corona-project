@@ -37,6 +37,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { MarkerDetailsComponent } from './marker-details/marker-details.component';
 
 registerLocaleData(en);
 
@@ -50,6 +51,7 @@ registerLocaleData(en);
     MapMarkerComponent,
     AddNewMarkerComponent,
     SnackbarComponent,
+    MarkerDetailsComponent,
   ],
   imports: [
     BrowserModule,

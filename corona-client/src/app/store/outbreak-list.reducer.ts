@@ -7,12 +7,14 @@ export interface State {
   list: City[];
   savedList: City[];
   addMode: boolean;
+  currentItem: City | undefined;
 }
 
 const initialState: State = {
   list: CITIES,
   savedList: CITIES,
   addMode: false,
+  currentItem: undefined,
 };
 
 export const outbreakListReducer = createReducer(
@@ -24,7 +26,7 @@ export const outbreakListReducer = createReducer(
   })),
   on(OutbreakListActions.remove, (state, { id }) => ({
     ...state,
-    list: removeItem(state.list, id),
+    savedList: removeItem(state.savedList, id),
   })),
   on(OutbreakListActions.changeAddMode, (state, { addMode }) => ({
     ...state,
@@ -33,6 +35,10 @@ export const outbreakListReducer = createReducer(
   on(OutbreakListActions.save, (state, { item }) => ({
     ...state,
     savedList: addItem(state.savedList, item),
+  })),
+  on(OutbreakListActions.changeCurrentItem, (state, { currentItem }) => ({
+    ...state,
+    currentItem: currentItem,
   }))
 );
 

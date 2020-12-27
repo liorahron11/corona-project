@@ -23,13 +23,6 @@ export class AppComponent {
       .select(selectList)
       .subscribe(
         (subscriber) =>
-          (this.newPlaces = subscriber['list'].map((city) => city.name))
-      );
-
-    this.store
-      .select(selectList)
-      .subscribe(
-        (subscriber) =>
           (this.newPlaces = subscriber['savedList'].map((city) => city.name))
       );
   }
@@ -53,5 +46,15 @@ export class AppComponent {
 
   turnOnEditMode = () => {
     this.editDetails = true;
+  };
+
+  showDetails = () => {
+    let currentItem;
+
+    this.store
+      .select((state) => state['list'].currentItem)
+      .subscribe((sub) => (currentItem = sub));
+
+    return currentItem;
   };
 }
