@@ -46,23 +46,20 @@ export const outbreakListReducer = createReducer(
 );
 
 const addItem = (array, item) => {
-  const newArray = [];
-
-  array.forEach((city) => {
-    newArray.push(city);
-  });
+  const newArray = [...array];
   newArray.push(item);
+
   return newArray;
 };
 
 const removeItem = (array, id: string) => {
   let tempArr = [...array];
-
   const index = array.findIndex((item) => item['_id'] === id);
 
   if (index > -1) {
     tempArr.splice(index, 1);
   }
+  
   return tempArr;
 };
 
