@@ -1,7 +1,6 @@
 import { Action, createReducer, on, Store } from '@ngrx/store';
 import * as OutbreakListActions from './actions/outbreak-list.actions';
 import { City } from '../city';
-import { CITIES } from '../citys';
 
 export interface State {
   list: City[];
@@ -19,10 +18,10 @@ const initialState: State = {
 
 export const outbreakListReducer = createReducer(
   initialState,
-  on(OutbreakListActions.set, (state, { list, savedList }) => ({
+  on(OutbreakListActions.set, (state, { list }) => ({
     ...state,
     list: list,
-    savedList: savedList,
+    savedList: list,
   })),
   on(OutbreakListActions.add, (state, { item }) => ({
     ...state,

@@ -3,7 +3,7 @@ import { City } from '../../city';
 
 export const set = createAction(
   '[OutbreakList] Set',
-  props<{ list: City[]; savedList: City[] }>()
+  props<{ list: City[] }>()
 );
 
 export const add = createAction('[OutbreakList] Add', props<{ item: City }>());

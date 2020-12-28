@@ -17,9 +17,9 @@ export class MarkersService {
     return this.store.select(selectList);
   }
 
-  addMarker = (id, name, position, flyPosition) => {
+  addMarker = (_id, name, position, flyPosition) => {
     const cityToAdd: City = {
-      id,
+      _id,
       name,
       position,
       flyPosition,
@@ -45,14 +45,6 @@ export class MarkersService {
         }))
       ),
       mergeAll()
-    );
-  };
-
-  parsePosition = (position) => {
-    return Cesium.Cartesian3.fromDegrees(
-      position.lon,
-      position.lat,
-      position.alt
     );
   };
 }

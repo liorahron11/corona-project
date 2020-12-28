@@ -24,4 +24,10 @@ export class MarkerDetailsComponent implements OnInit {
     this.markersService.deleteMarker(this.currentItem['_id']);
     this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
   };
+
+  parsedPosition = () => {
+    return ` ${this.currentItem.position.x},
+            ${this.currentItem.position.y},
+            ${this.currentItem.position.z}`;
+  };
 }

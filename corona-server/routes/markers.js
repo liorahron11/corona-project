@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { getAll, getById } = require("../Services/MarkerService");
+const {
+  getAll,
+  getById,
+  clean,
+  addList,
+} = require("../Services/MarkerService");
 
 router.get("/", (req, res) => {
   getAll().then((markers, err) => {
@@ -25,6 +30,24 @@ router.get("/:id", (req, res) => {
 
     res.send(marker);
   });
+});
+
+router.post("/", (req, res) => {
+  clean()
+    .then(() => {
+      addList(req.body.list)
+        .then(() => {
+          res.status(200).send();
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).send(err.message);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(err.message);
+    });
 });
 
 module.exports = router;

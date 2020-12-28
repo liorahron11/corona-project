@@ -22,6 +22,21 @@
       <fa-icon [icon]="plusIcon"></fa-icon>
     </button>
     <app-map (openEditWindowEvent)="turnOnEditMode()"></app-map>
+    <button
+      (click)="update()"
+      mat-fab
+      color="primary"
+      style="
+        position: absolute;
+        top: auto;
+        bottom: 3vh;
+        left: 1vw;
+        z-index: 10;
+        font-size: 1.3em;
+      "
+    >
+      עדכן
+    </button>
   </div>
   <div id="scrollsContainer">
     <div class="scroll">

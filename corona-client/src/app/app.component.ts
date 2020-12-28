@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { faShieldVirus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { EmitEvent, EventBusService, Events } from './event-bus.service';
 import { changeAddMode, set } from './store/actions/outbreak-list.actions';
 import { selectList } from './store/outbreak-list.selector';
 import api from '../api';
-import { MarkersService } from './markers.service';
-import { parse } from '@fortawesome/fontawesome-svg-core';
+import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @Component({
   selector: 'app-root',
@@ -22,29 +22,26 @@ export class AppComponent {
   constructor(
     private store: Store,
     private eventbus: EventBusService,
-    private markersService: MarkersService
+    private snackbar: MatSnackBar
   ) {
-    api.markers.GetAll().then((res) => {
-      const parsedMarkers = res.data.map((marker) => {
-        marker.position = this.markersService.parsePosition(marker.position);
-        marker.flyPosition = this.markersService.parsePosition(
-          marker.flyPosition
-        );
+    api.markers
+      .GetAll()
+      .then((res) => {
+        this.store.dispatch(set({ list: res.data }));
 
-        return marker;
+        this.store
+          .select(selectList)
+          .subscribe(
+            (subscriber) =>
+              (this.newPlaces = subscriber['savedList'].map(
+                (city) => city.name
+              ))
+          );
+      })
+      .catch((error) => {
+        console.log(error);
+        this.showSnackbar('הייתה שגיאה בקבלת המידע', 'סגור');
       });
-
-      this.store.dispatch(
-        set({ list: parsedMarkers, savedList: parsedMarkers })
-      );
-
-      this.store
-        .select(selectList)
-        .subscribe(
-          (subscriber) =>
-            (this.newPlaces = subscriber['savedList'].map((city) => city.name))
-        );
-    });
   }
 
   ngOnInit() {}
@@ -78,5 +75,30 @@ export class AppComponent {
       .subscribe((sub) => (currentItem = sub));
 
     return currentItem;
+  };
+
+  update = () => {
+    let list = [];
+
+    this.store
+      .select(selectList)
+      .subscribe((subscriber) => (list = subscriber['savedList']));
+
+    api.markers
+      .GraphQLUpdate(list)
+      .then(() => {
+        this.showSnackbar('מידע התעדכן בהצלחה', 'סגור');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.showSnackbar('שגיאה', 'סגור');
+      });
+  };
+
+  showSnackbar = (message, action) => {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      duration: 3000,
+      data: { message: message, action: action },
+    });
   };
 }

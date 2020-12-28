@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const { graphqlHTTP } = require("express-graphql");
+const schema = require("./schema/schema");
 const markers = require("./routes/markers");
 const assets = require("./routes/assets");
 const bodyParser = require("body-parser");
@@ -7,6 +9,14 @@ const app = express();
 const port = 9000;
 
 app.use(cors());
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
