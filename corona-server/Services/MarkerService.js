@@ -1,4 +1,5 @@
 const MarkerModel = require("../Models/MarkerModel");
+const mongoose = require("mongoose");
 
 const getAll = () => {
   return MarkerModel.find();
@@ -9,6 +10,10 @@ const getById = (id) => {
 };
 
 const addList = (markersList) => {
+  markersList.map((marker) => {
+    marker._id = mongoose.Types.ObjectId();
+  });
+
   return MarkerModel.insertMany(markersList);
 };
 

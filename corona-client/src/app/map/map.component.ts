@@ -9,7 +9,6 @@ import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../markers.service';
 import { EventBusService, Events } from '../event-bus.service';
 import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-map',
@@ -21,13 +20,11 @@ import { Store } from '@ngrx/store';
 export class MapComponent implements OnInit {
   @Output() openEditWindowEvent = new EventEmitter<string>();
   eventbusSub: Subscription;
-  pickMarker;
 
   constructor(
     private viewerConf: ViewerConfiguration,
     private eventbus: EventBusService,
     private markersService: MarkersService,
-    private store: Store
   ) {
     viewerConf.viewerOptions = {
       selectionIndicator: false,
@@ -72,62 +69,6 @@ export class MapComponent implements OnInit {
         viewer.camera.flyTo({
           destination: city.flyPosition,
         });
-      });
-
-      this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
-        let addMode: boolean;
-        this.store
-          .select((state) => state)
-          .subscribe((subscriber) => (addMode = subscriber['list'].addMode));
-        const canvas = viewer.scene.canvas;
-
-        if (addMode) {
-          viewer._container.style.cursor = `crosshair`;
-
-          canvas.addEventListener(
-            'click',
-            (this.pickMarker = (e) => {
-              var ellipsoid = viewer.scene.globe.ellipsoid;
-
-              var cartesian = viewer.camera.pickEllipsoid(
-                new Cesium.Cartesian3(e.clientX, e.clientY),
-                ellipsoid
-              );
-              var cartographic = ellipsoid.cartesianToCartographic(cartesian);
-              var longitudeString = Cesium.Math.toDegrees(
-                cartographic.longitude
-              ).toFixed(10);
-              var latitudeString = Cesium.Math.toDegrees(
-                cartographic.latitude
-              ).toFixed(10);
-              var heightString = Cesium.Math.toDegrees(
-                cartographic.height
-              ).toFixed(10);
-
-              markersService.addMarker(
-                longitudeString + latitudeString,
-                longitudeString.substring(1, 5) +
-                  latitudeString.substring(1, 6),
-                Cesium.Cartesian3.fromDegrees(
-                  longitudeString,
-                  latitudeString,
-                  heightString
-                ),
-                Cesium.Cartesian3.fromDegrees(
-                  longitudeString,
-                  latitudeString,
-                  50000
-                )
-              );
-              viewer._container.style.cursor = 'default';
-              canvas.removeEventListener('click', this.pickMarker);
-              this.openEditWindow();
-            })
-          );
-        } else {
-          viewer._container.style.cursor = 'default';
-          canvas.removeEventListener('click', this.pickMarker);
-        }
       });
     };
   }

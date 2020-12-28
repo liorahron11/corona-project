@@ -1,3 +1,6 @@
 <ac-map>
-  <app-map-marker [entities]="loadMap()"></app-map-marker>
+  <app-map-marker
+    (openEditWindow)="openEditWindow()"
+    [entities]="loadMap()"
+  ></app-map-marker>
 </ac-map>

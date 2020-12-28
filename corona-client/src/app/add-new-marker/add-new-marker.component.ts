@@ -43,7 +43,7 @@ export class AddNewMarkerComponent implements OnInit {
   save = () => {
     if (!this.name.hasError('required')) {
       const newMarker: City = {
-        id: this.currentItem.id,
+        _id: this.currentItem._id,
         name: this.name.value,
         position: this.currentItem.position,
         flyPosition: this.currentItem.flyPosition,
@@ -60,7 +60,7 @@ export class AddNewMarkerComponent implements OnInit {
 
   cancel = () => {
     this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMarker(this.currentItem.id);
+    this.markersService.deleteMarker(this.currentItem._id);
     this.closeWindow();
   };
 
