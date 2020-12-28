@@ -28,6 +28,7 @@
     "@ngrx/store": "^10.1.0",
     "@ngrx/store-devtools": "^10.1.0",
     "angular-cesium": "0.0.66",
+    "axios": "^0.21.1",
     "cesium": "^1.76.0",
     "ng-zorro-antd": "^10.2.0",
     "rxjs": "^6.6.3",
@@ -39,8 +40,9 @@
     "@angular/cli": "~11.0.2",
     "@angular/compiler-cli": "~11.0.1",
     "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.19.11",
     "codelyzer": "^6.0.0",
+    "dotenv": "^8.2.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.1.0",
@@ -51,6 +53,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.0.2",
+    "yargs": "^16.2.0"
   }
 }

@@ -7,9 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MapMarkerComponent implements OnInit {
   @Input() entities;
+  mapMarker: string = 'http://localhost:9000/assets/map-marker';
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

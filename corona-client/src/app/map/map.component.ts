@@ -103,9 +103,6 @@ export class MapComponent implements OnInit {
               var heightString = Cesium.Math.toDegrees(
                 cartographic.height
               ).toFixed(10);
-              console.log('lon: ', longitudeString);
-              console.log('lat: ', latitudeString);
-              console.log('alt: ', heightString);
 
               markersService.addMarker(
                 longitudeString + latitudeString,

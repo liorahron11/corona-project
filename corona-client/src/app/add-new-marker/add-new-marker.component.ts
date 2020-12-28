@@ -51,7 +51,10 @@ export class AddNewMarkerComponent implements OnInit {
 
       this.store.dispatch(save({ item: newMarker }));
       this.closeWindow();
-      this.snackbar.openFromComponent(SnackbarComponent);
+      this.snackbar.openFromComponent(SnackbarComponent, {
+        duration: 3000,
+        data: { message: 'מיקום נוסף בהצלחה', action: 'סגור' },
+      });
     }
   };
 
