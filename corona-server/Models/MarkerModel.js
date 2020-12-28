@@ -8,6 +8,7 @@ const markerSchema = new mongoose.Schema(
   },
   {
     collection: "markers",
+    versionKey: false,
   }
 );
 
