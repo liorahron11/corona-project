@@ -34,13 +34,13 @@ export class MapMarkerComponent implements OnInit {
       event: CesiumEvent.LEFT_CLICK,
     };
 
+    const clickEvent = this.eventManager.register(eventRegistration);
+
     this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
       let addMode: boolean;
       this.store
         .select((state) => state)
         .subscribe((subscriber) => (addMode = subscriber['list'].addMode));
-
-      const clickEvent = this.eventManager.register(eventRegistration);
 
       if (addMode) {
         viewer._container.style.cursor = `crosshair`;
