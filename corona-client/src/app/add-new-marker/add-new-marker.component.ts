@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { City } from '../city';
 import { MarkersService } from '../markers.service';
-import { add, changeAddMode, save } from '../store/actions/outbreak-list.actions';
+import { changeAddMode, save } from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
@@ -31,7 +31,7 @@ export class AddNewMarkerComponent implements OnInit {
 
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (list = subscriber['list']));
+      .subscribe((subscriber) => (list = subscriber));
 
     this.currentItem = list[list.length - 1].entity;
   }

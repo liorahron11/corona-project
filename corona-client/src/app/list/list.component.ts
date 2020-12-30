@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
 
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (mapItemsList = subscriber['list']));
+      .subscribe((subscriber) => (mapItemsList = subscriber));
 
     const cityClicked = mapItemsList.find(
       (mapItem) => mapItem.entity.name === this.currentItem

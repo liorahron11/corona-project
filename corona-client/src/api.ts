@@ -3,15 +3,12 @@ import { MapItem } from './app/mapItem';
 const API_URL = 'http://localhost:9000';
 
 const api = {
-  markers: {
+  mapItems: {
     GetAll: () => {
-      return axios.get(`${API_URL}/markers`);
+      return axios.get(`${API_URL}/mapItems`);
     },
     GetById: (id) => {
-      return axios.get(`${API_URL}/markers/${id}`);
-    },
-    Update: (list) => {
-      return axios.post(`${API_URL}/markers`, { list: list });
+      return axios.get(`${API_URL}/mapItems/${id}`);
     },
     GraphQLUpdate: (list) => {
       let newList = [];
@@ -39,39 +36,6 @@ const api = {
           query,
           variables: {
             list: newList,
-          },
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-    },
-  },
-  mapItems: {
-    GetAll: () => {
-      return axios.get(`${API_URL}/mapItems`);
-    },
-    GetById: (id) => {
-      return axios.get(`${API_URL}/mapItems/${id}`);
-    },
-    GraphQLUpdate: (list) => {
-      const query = `mutation query($list: [MarkerInput]) {
-        clearMarkers {
-          name
-        }
-        setMarkers(list: $list) {
-          name
-        }
-      }`;
-
-      return axios.post(
-        `${API_URL}/graphql`,
-        {
-          query,
-          variables: {
-            list,
           },
         },
         {

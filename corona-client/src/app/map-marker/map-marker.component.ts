@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CesiumEvent,
-  CesiumEventModifier,
   CesiumService,
   EventRegistrationInput,
   MapEventsManagerService,
@@ -10,6 +9,7 @@ import {
 import { Subscription } from 'rxjs';
 import { EventBusService, Events } from '../event-bus.service';
 import { MarkersService } from '../markers.service';
+import { selectAddMode } from '../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-map-marker',
@@ -39,8 +39,8 @@ export class MapMarkerComponent implements OnInit {
     this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
       let addMode: boolean;
       this.store
-        .select((state) => state)
-        .subscribe((subscriber) => (addMode = subscriber['list'].addMode));
+        .select(selectAddMode)
+        .subscribe((subscriber) => (addMode = subscriber));
 
       if (addMode) {
         viewer._container.style.cursor = `crosshair`;

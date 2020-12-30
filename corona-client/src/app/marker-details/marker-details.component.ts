@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { City } from '../city';
 import { MarkersService } from '../markers.service';
 import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
+import { selectCurrentItem } from '../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-marker-details',
@@ -16,12 +17,11 @@ export class MarkerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store
-      .select((state) => state['list'].currentItem)
+      .select(selectCurrentItem)
       .subscribe((sub) => (this.currentItem = sub));
   }
 
   remove = () => {
-
     this.markersService.deleteMarker(this.currentItem['_id']);
     this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
   };

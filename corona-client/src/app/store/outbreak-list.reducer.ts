@@ -1,4 +1,4 @@
-import { Action, createReducer, on, Store } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as OutbreakListActions from './actions/outbreak-list.actions';
 import { City } from '../city';
 import { MapItem } from '../mapItem';
@@ -71,7 +71,6 @@ const saveItem = (array, item) => {
 const removeItem = (array, id: string) => {
   let tempArr = [...array];
   const index = array.findIndex((item) => item.id === id);
-  debugger;
 
   if (index > -1) {
     const tempMapItem: MapItem = {

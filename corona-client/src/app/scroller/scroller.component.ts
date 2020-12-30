@@ -12,11 +12,8 @@ import { selectList } from '../store/outbreak-list.selector';
 export class ScrollerComponent implements OnInit {
   items: string[] = [];
   constructor(private store: Store) {
-    let mapItemsList: MapItem[];
-
     this.store.select(selectList).subscribe((subscriber) => {
-      mapItemsList = subscriber['list'];
-      this.items = mapItemsList
+      this.items = subscriber
         .filter((mapItem) => mapItem.actionType === ActionType.ADD_UPDATE)
         .map((mapItem) => {
           return mapItem.entity.name;

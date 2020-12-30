@@ -42,8 +42,8 @@ export class MarkersService {
 
   getUpdatedMap = () => {
     return this.initMarkers().pipe(
-      map((store) =>
-        store['list'].map((item) => ({
+      map((list) =>
+        list.map((item) => ({
           id: item.id,
           actionType: item.actionType
             ? ActionType.DELETE
