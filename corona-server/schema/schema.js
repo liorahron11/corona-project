@@ -1,5 +1,10 @@
 const graphql = require("graphql");
-const MapItemsService = require("../Services/MapItemsService");
+const {
+  getAll,
+  getById,
+  clean,
+  addList,
+} = require("../Services/MapItemsService");
 
 const {
   GraphQLObjectType,
@@ -75,13 +80,13 @@ const RootQuery = new GraphQLObjectType({
       type: MapItemType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return MapItemsService.getById(args.id);
+        return getById(args.id);
       },
     },
     Markers: {
       type: new GraphQLList(MapItemType),
       resolve(parent, args) {
-        return MapItemsService.getAll();
+        return getAll();
       },
     },
   },
@@ -93,7 +98,7 @@ const Mutation = new GraphQLObjectType({
     clearMarkers: {
       type: MapItemType,
       resolve(parent) {
-        return MapItemsService.clean();
+        return clean();
       },
     },
     setMarkers: {
@@ -102,7 +107,7 @@ const Mutation = new GraphQLObjectType({
         list: { type: new GraphQLList(MapItemInput) },
       },
       resolve: (parent, args) => {
-        return MapItemsService.addList(args.list);
+        return addList(args.list);
       },
     },
   },

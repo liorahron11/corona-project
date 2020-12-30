@@ -1,5 +1,4 @@
 const MapItemModel = require("../Models/MapItemModel");
-const mongoose = require("mongoose");
 
 const getAll = () => {
   return MapItemModel.find();
