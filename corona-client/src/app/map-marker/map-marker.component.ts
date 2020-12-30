@@ -8,6 +8,7 @@ import {
 } from 'angular-cesium';
 import { Subscription } from 'rxjs';
 import { EventBusService, Events } from '../event-bus.service';
+import { MapItem } from '../mapItem';
 import { MarkersService } from '../markers.service';
 import { selectAddMode } from '../store/outbreak-list.selector';
 
@@ -17,9 +18,9 @@ import { selectAddMode } from '../store/outbreak-list.selector';
   styleUrls: ['./map-marker.component.css'],
 })
 export class MapMarkerComponent implements OnInit {
-  @Output() openEditWindow = new EventEmitter<string>();
-  @Input() entities;
-  mapMarker: string = 'http://localhost:9000/assets/map-marker';
+  @Output() openEditWindow: EventEmitter<string> = new EventEmitter<string>();
+  @Input() entities: MapItem[];
+  MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
   eventbusSub: Subscription;
 
   constructor(
@@ -29,7 +30,7 @@ export class MapMarkerComponent implements OnInit {
     private cesiumService: CesiumService,
     private markersService: MarkersService
   ) {
-    const viewer = cesiumService.getViewer();
+    const viewer = this.cesiumService.getViewer();
     const eventRegistration: EventRegistrationInput = {
       event: CesiumEvent.LEFT_CLICK,
     };
@@ -43,47 +44,33 @@ export class MapMarkerComponent implements OnInit {
         .subscribe((subscriber) => (addMode = subscriber));
 
       if (addMode) {
-        viewer._container.style.cursor = `crosshair`;
+        this.setCrosshairPointer(viewer);
 
         clickEvent.subscribe((result) => {
-          var ellipsoid = viewer.scene.globe.ellipsoid;
+          const ellipsoid = viewer.scene.globe.ellipsoid;
 
-          var cartesian = viewer.camera.pickEllipsoid(
+          const cartesian = viewer.camera.pickEllipsoid(
             result.movement['position'],
             ellipsoid
           );
-          var cartographic = ellipsoid.cartesianToCartographic(cartesian);
-          var longitudeString = Cesium.Math.toDegrees(
-            cartographic.longitude
-          ).toFixed(10);
-          var latitudeString = Cesium.Math.toDegrees(
-            cartographic.latitude
-          ).toFixed(10);
-          var heightString = Cesium.Math.toDegrees(cartographic.height).toFixed(
-            10
-          );
+          const cartographic = ellipsoid.cartesianToCartographic(cartesian);
+          const lon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(10);
+          const lat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(10);
+          const alt = Cesium.Math.toDegrees(cartographic.height).toFixed(10);
 
           this.markersService.addMarker(
-            longitudeString + latitudeString,
-            longitudeString.substring(1, 5) + latitudeString.substring(1, 6),
-            Cesium.Cartesian3.fromDegrees(
-              longitudeString,
-              latitudeString,
-              heightString
-            ),
-            Cesium.Cartesian3.fromDegrees(
-              longitudeString,
-              latitudeString,
-              50000
-            )
+            lon + lat,
+            lon.substring(1, 5) + lat.substring(1, 6),
+            Cesium.Cartesian3.fromDegrees(lon, lat, alt),
+            Cesium.Cartesian3.fromDegrees(lon, lat, 50000)
           );
 
           this.openEdit();
-          viewer._container.style.cursor = 'default';
+          this.setDefaultPointer(viewer);
           clickEvent.dispose();
         });
       } else {
-        viewer._container.style.cursor = 'default';
+        this.setDefaultPointer(viewer);
         clickEvent.dispose();
       }
     });
@@ -93,5 +80,13 @@ export class MapMarkerComponent implements OnInit {
 
   openEdit(): void {
     this.openEditWindow.next();
+  }
+
+  setCrosshairPointer(viewer): void {
+    viewer._container.style.cursor = `crosshair`;
+  }
+
+  setDefaultPointer(viewer): void {
+    viewer._container.style.cursor = `default`;
   }
 }

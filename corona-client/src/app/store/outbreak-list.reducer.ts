@@ -1,13 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as OutbreakListActions from './actions/outbreak-list.actions';
-import { City } from '../city';
 import { MapItem } from '../mapItem';
 import { ActionType } from 'angular-cesium';
 
 export interface State {
   list: MapItem[];
   addMode: boolean;
-  currentItem: City | undefined;
+  currentItem: MapItem | undefined;
 }
 
 const initialState: State = {
@@ -70,7 +69,7 @@ const saveItem = (array, item) => {
 
 const removeItem = (array, id: string) => {
   let tempArr = [...array];
-  const index = array.findIndex((item) => item.id === id);
+  const index = array.findIndex((item: MapItem) => item.id === id);
 
   if (index > -1) {
     const tempMapItem: MapItem = {

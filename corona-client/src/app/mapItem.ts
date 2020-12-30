@@ -1,8 +1,8 @@
 import { ActionType } from 'angular-cesium';
-import { City } from './city';
+import { Entity } from './entity';
 
 export interface MapItem {
   id: string;
   actionType: ActionType;
-  entity: City;
+  entity: Entity;
 }

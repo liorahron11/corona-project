@@ -29,7 +29,6 @@ const MapItemType = new GraphQLObjectType({
 const MarkerType = new GraphQLObjectType({
   name: "Marker",
   fields: () => ({
-    _id: { type: GraphQLID },
     name: { type: GraphQLString },
     position: { type: PositionType },
     flyPosition: { type: PositionType },
@@ -57,7 +56,6 @@ const MapItemInput = new GraphQLInputObjectType({
 const MarkerInput = new GraphQLInputObjectType({
   name: "MarkerInput",
   fields: () => ({
-    _id: { type: GraphQLID },
     name: { type: GraphQLString },
     position: { type: PositionInput },
     flyPosition: { type: PositionInput },

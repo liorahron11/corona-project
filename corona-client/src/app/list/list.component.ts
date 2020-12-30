@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { EventBusService, EmitEvent, Events } from '../event-bus.service';
+import { MapItem } from '../mapItem';
 import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
 
@@ -22,18 +23,17 @@ export class ListComponent implements OnInit {
   itemClicked = (options: MatListOption[]) => {
     this.currentItem = options.map((o) => o.value)[0];
 
-    let mapItemsList;
+    let mapItemsList: MapItem[];
 
     this.store
       .select(selectList)
       .subscribe((subscriber) => (mapItemsList = subscriber));
 
-    const cityClicked = mapItemsList.find(
+    const MapItemClicked = mapItemsList.find(
       (mapItem) => mapItem.entity.name === this.currentItem
-    ).entity;
+    );
 
-    this.eventbus.emit(new EmitEvent(Events.MarkerSelect, cityClicked));
-
-    this.store.dispatch(changeCurrentItem({ currentItem: cityClicked }));
+    this.eventbus.emit(new EmitEvent(Events.MarkerSelect, MapItemClicked));
+    this.store.dispatch(changeCurrentItem({ currentItem: MapItemClicked }));
   };
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActionType } from 'angular-cesium';
+import { Observable } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
-import { City } from './city';
+import { Entity } from './entity';
 import { MapItem } from './mapItem';
 import { add, remove } from './store/actions/outbreak-list.actions';
 import { selectList } from './store/outbreak-list.selector';
@@ -13,34 +14,31 @@ import { selectList } from './store/outbreak-list.selector';
 export class MarkersService {
   constructor(private store: Store) {}
 
-  private initMarkers() {
+  private initMarkers(): Observable<MapItem[]> {
     return this.store.select(selectList);
   }
 
-  addMarker = (_id, name, position, flyPosition) => {
-    const cityToAdd: City = {
-      _id,
+  public addMarker = (id, name, position, flyPosition) => {
+    const entityToAdd: Entity = {
       name,
       position,
       flyPosition,
     };
 
     const mapItemToAdd: MapItem = {
-      id: _id,
-      entity: cityToAdd,
+      id,
+      entity: entityToAdd,
       actionType: ActionType.DELETE,
     };
 
     this.store.dispatch(add({ item: mapItemToAdd }));
-
-    return this.getUpdatedMap();
   };
 
-  deleteMarker = (id: string) => {
+  public deleteMarker = (id: string) => {
     this.store.dispatch(remove({ id: id }));
   };
 
-  getUpdatedMap = () => {
+  public getUpdatedMap = () => {
     return this.initMarkers().pipe(
       map((list) =>
         list.map((item) => ({

@@ -5,7 +5,7 @@
     <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
 
-  <p>מיקום: {{ currentItem.position }}</p>
+  <p>מיקום: {{ currentItem.entity.position }}</p>
 
   <div class="buttonsFlex">
     <button mat-raised-button color="primary" (click)="save()">שמור</button>

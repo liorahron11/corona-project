@@ -19,7 +19,6 @@ const api = {
           actionType: mapItem.actionType,
         });
       });
-      console.log(newList);
 
       const query = `mutation query($list: [MapItemInput]) {
         clearMarkers {
