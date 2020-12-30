@@ -3,6 +3,7 @@ const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const markers = require("./routes/markers");
+const mapItems = require("./routes/mapItems");
 const assets = require("./routes/assets");
 const bodyParser = require("body-parser");
 const app = express();
@@ -20,8 +21,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/markers", markers);
 app.use("/assets", assets);
+app.use("/mapItems", mapItems);
 
 const mongoose = require("mongoose");
 mongoose.connect(

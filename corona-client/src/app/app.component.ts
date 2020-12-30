@@ -1,12 +1,14 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { faShieldVirus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { EmitEvent, EventBusService, Events } from './event-bus.service';
 import { changeAddMode, set } from './store/actions/outbreak-list.actions';
 import { selectList } from './store/outbreak-list.selector';
 import api from '../api';
-import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { MapItem } from './mapItem';
+import { ActionType } from 'angular-cesium';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 export class AppComponent {
   virusIcon = faShieldVirus;
   plusIcon = faPlus;
-  newPlaces: string;
   editDetails: boolean = false;
 
   constructor(
@@ -24,19 +25,10 @@ export class AppComponent {
     private eventbus: EventBusService,
     private snackbar: MatSnackBar
   ) {
-    api.markers
+    api.mapItems
       .GetAll()
       .then((res) => {
         this.store.dispatch(set({ list: res.data }));
-
-        this.store
-          .select(selectList)
-          .subscribe(
-            (subscriber) =>
-              (this.newPlaces = subscriber['savedList'].map(
-                (city) => city.name
-              ))
-          );
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +74,12 @@ export class AppComponent {
 
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (list = subscriber['savedList']));
+      .subscribe(
+        (subscriber) =>
+          (list = subscriber['list'].filter(
+            (mapItem: MapItem) => mapItem.actionType === ActionType.ADD_UPDATE
+          ))
+      );
 
     api.markers
       .GraphQLUpdate(list)

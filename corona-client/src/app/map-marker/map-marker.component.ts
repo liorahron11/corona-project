@@ -63,7 +63,7 @@ export class MapMarkerComponent implements OnInit {
             10
           );
 
-          markersService.addMarker(
+          this.markersService.addMarker(
             longitudeString + latitudeString,
             longitudeString.substring(1, 5) + latitudeString.substring(1, 6),
             Cesium.Cartesian3.fromDegrees(

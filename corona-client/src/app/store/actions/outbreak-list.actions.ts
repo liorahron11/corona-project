@@ -1,14 +1,21 @@
 import { createAction, props } from '@ngrx/store';
 import { City } from '../../city';
+import { MapItem } from '../../mapItem';
 
 export const set = createAction(
   '[OutbreakList] Set',
-  props<{ list: City[] }>()
+  props<{ list: MapItem[] }>()
 );
 
-export const add = createAction('[OutbreakList] Add', props<{ item: City }>());
+export const add = createAction(
+  '[OutbreakList] Add',
+  props<{ item: MapItem }>()
+);
 
-export const save = createAction('[SavedList] save', props<{ item: City }>());
+export const save = createAction(
+  '[SavedList] save',
+  props<{ item: MapItem }>()
+);
 
 export const remove = createAction(
   '[OutbreakList] Remove',

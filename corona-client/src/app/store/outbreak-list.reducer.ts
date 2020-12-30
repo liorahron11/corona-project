@@ -1,17 +1,17 @@
 import { Action, createReducer, on, Store } from '@ngrx/store';
 import * as OutbreakListActions from './actions/outbreak-list.actions';
 import { City } from '../city';
+import { MapItem } from '../mapItem';
+import { ActionType } from 'angular-cesium';
 
 export interface State {
-  list: City[];
-  savedList: City[];
+  list: MapItem[];
   addMode: boolean;
   currentItem: City | undefined;
 }
 
 const initialState: State = {
   list: [],
-  savedList: [],
   addMode: false,
   currentItem: undefined,
 };
@@ -21,7 +21,6 @@ export const outbreakListReducer = createReducer(
   on(OutbreakListActions.set, (state, { list }) => ({
     ...state,
     list: list,
-    savedList: list,
   })),
   on(OutbreakListActions.add, (state, { item }) => ({
     ...state,
@@ -29,19 +28,19 @@ export const outbreakListReducer = createReducer(
   })),
   on(OutbreakListActions.remove, (state, { id }) => ({
     ...state,
-    savedList: removeItem(state.savedList, id),
+    list: removeItem(state.list, id),
   })),
   on(OutbreakListActions.changeAddMode, (state, { addMode }) => ({
     ...state,
     addMode: addMode,
   })),
-  on(OutbreakListActions.save, (state, { item }) => ({
-    ...state,
-    savedList: addItem(state.savedList, item),
-  })),
   on(OutbreakListActions.changeCurrentItem, (state, { currentItem }) => ({
     ...state,
     currentItem: currentItem,
+  })),
+  on(OutbreakListActions.save, (state, { item }) => ({
+    ...state,
+    list: saveItem(state.list, item),
   }))
 );
 
@@ -52,14 +51,37 @@ const addItem = (array, item) => {
   return newArray;
 };
 
-const removeItem = (array, id: string) => {
+const saveItem = (array, item) => {
   let tempArr = [...array];
-  const index = array.findIndex((item) => item['_id'] === id);
+  const index = array.findIndex((arrayItem) => arrayItem.id === item.id);
 
   if (index > -1) {
+    const tempMapItem: MapItem = {
+      ...tempArr[index],
+      entity: item.entity,
+      actionType: ActionType.ADD_UPDATE,
+    };
     tempArr.splice(index, 1);
+    tempArr.push(tempMapItem);
   }
-  
+
+  return tempArr;
+};
+
+const removeItem = (array, id: string) => {
+  let tempArr = [...array];
+  const index = array.findIndex((item) => item.id === id);
+  debugger;
+
+  if (index > -1) {
+    const tempMapItem: MapItem = {
+      ...tempArr[index],
+      actionType: ActionType.DELETE,
+    };
+    tempArr.splice(index, 1);
+    tempArr.push(tempMapItem);
+  }
+
   return tempArr;
 };
 
