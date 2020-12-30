@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const MarkerService = require("../Services/MarkerService");
+const MapItemsService = require("../Services/MapItemsService");
 
 const {
   GraphQLObjectType,
@@ -9,7 +9,17 @@ const {
   GraphQLSchema,
   GraphQLList,
   GraphQLInputObjectType,
+  GraphQLInt,
 } = graphql;
+
+const MapItemType = new GraphQLObjectType({
+  name: "MapItem",
+  fields: () => ({
+    _id: { type: GraphQLString },
+    entity: { type: MarkerType },
+    actionType: { type: GraphQLInt },
+  }),
+});
 
 const MarkerType = new GraphQLObjectType({
   name: "Marker",
@@ -27,6 +37,15 @@ const PositionType = new GraphQLObjectType({
     x: { type: GraphQLFloat },
     y: { type: GraphQLFloat },
     z: { type: GraphQLFloat },
+  }),
+});
+
+const MapItemInput = new GraphQLInputObjectType({
+  name: "MapItemInput",
+  fields: () => ({
+    _id: { type: GraphQLString },
+    entity: { type: MarkerInput },
+    actionType: { type: GraphQLInt },
   }),
 });
 
@@ -53,16 +72,16 @@ const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     Marker: {
-      type: MarkerType,
+      type: MapItemType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return MarkerService.getById(args.id);
+        return MapItemsService.getById(args.id);
       },
     },
     Markers: {
-      type: new GraphQLList(MarkerType),
+      type: new GraphQLList(MapItemType),
       resolve(parent, args) {
-        return MarkerService.getAll();
+        return MapItemsService.getAll();
       },
     },
   },
@@ -72,18 +91,18 @@ const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     clearMarkers: {
-      type: MarkerType,
+      type: MapItemType,
       resolve(parent) {
-        return MarkerService.clean();
+        return MapItemsService.clean();
       },
     },
     setMarkers: {
-      type: MarkerType,
+      type: MapItemType,
       args: {
-        list: { type: new GraphQLList(MarkerInput) },
+        list: { type: new GraphQLList(MapItemInput) },
       },
       resolve: (parent, args) => {
-        return MarkerService.addList(args.list);
+        return MapItemsService.addList(args.list);
       },
     },
   },

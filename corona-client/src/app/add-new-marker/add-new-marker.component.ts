@@ -3,10 +3,12 @@ import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { City } from '../city';
 import { MarkersService } from '../markers.service';
-import { changeAddMode, save } from '../store/actions/outbreak-list.actions';
+import { add, changeAddMode, save } from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { MapItem } from '../mapItem';
+import { ActionType } from 'angular-cesium';
 
 @Component({
   selector: 'app-add-new-marker',
@@ -31,7 +33,7 @@ export class AddNewMarkerComponent implements OnInit {
       .select(selectList)
       .subscribe((subscriber) => (list = subscriber['list']));
 
-    this.currentItem = list[list.length - 1];
+    this.currentItem = list[list.length - 1].entity;
   }
 
   getErrorMessage() {
@@ -42,14 +44,20 @@ export class AddNewMarkerComponent implements OnInit {
 
   save = () => {
     if (!this.name.hasError('required')) {
-      const newMarker: City = {
+      const newCity: City = {
         _id: this.currentItem._id,
         name: this.name.value,
         position: this.currentItem.position,
         flyPosition: this.currentItem.flyPosition,
       };
 
-      this.store.dispatch(save({ item: newMarker }));
+      const newMapItem: MapItem = {
+        id: newCity._id,
+        entity: newCity,
+        actionType: ActionType.ADD_UPDATE,
+      };
+
+      this.store.dispatch(save({ item: newMapItem }));
       this.closeWindow();
       this.snackbar.openFromComponent(SnackbarComponent, {
         duration: 3000,

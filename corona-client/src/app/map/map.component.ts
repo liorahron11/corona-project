@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
   constructor(
     private viewerConf: ViewerConfiguration,
     private eventbus: EventBusService,
-    private markersService: MarkersService,
+    private markersService: MarkersService
   ) {
     viewerConf.viewerOptions = {
       selectionIndicator: false,

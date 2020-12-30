@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { EventBusService, EmitEvent, Events } from '../event-bus.service';
@@ -12,7 +12,7 @@ import { selectList } from '../store/outbreak-list.selector';
   providers: [],
 })
 export class ListComponent implements OnInit {
-  @Input() items = [];
+  @Input() items: string[] = [];
   currentItem: string;
 
   constructor(private eventbus: EventBusService, private store: Store) {}
@@ -22,13 +22,15 @@ export class ListComponent implements OnInit {
   itemClicked = (options: MatListOption[]) => {
     this.currentItem = options.map((o) => o.value)[0];
 
-    let cityList;
+    let mapItemsList;
 
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (cityList = subscriber['savedList']));
+      .subscribe((subscriber) => (mapItemsList = subscriber['list']));
 
-    const cityClicked = cityList.find((city) => city.name === this.currentItem);
+    const cityClicked = mapItemsList.find(
+      (mapItem) => mapItem.entity.name === this.currentItem
+    ).entity;
 
     this.eventbus.emit(new EmitEvent(Events.MarkerSelect, cityClicked));
 
