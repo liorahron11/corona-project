@@ -1,12 +1,7 @@
 const MapItemModel = require("../Models/MapItemModel");
-const mongoose = require("mongoose");
 
 const getAll = () => {
   return MapItemModel.find();
-};
-
-const getById = (id) => {
-  return MapItemModel.findOne({ _id: id });
 };
 
 const addList = (mapItemsList) => {
@@ -18,8 +13,7 @@ const clean = () => {
 };
 
 module.exports = {
-  getAll: getAll,
-  getById: getById,
-  clean: clean,
-  addList: addList,
+  getAll,
+  clean,
+  addList,
 };

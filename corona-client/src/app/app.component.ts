@@ -3,7 +3,11 @@ import { faShieldVirus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { EmitEvent, EventBusService, Events } from './event-bus.service';
 import { changeAddMode, set } from './store/actions/outbreak-list.actions';
-import { selectList } from './store/outbreak-list.selector';
+import {
+  selectAddMode,
+  selectCurrentItem,
+  selectList,
+} from './store/outbreak-list.selector';
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './snackbar/snackbar.component';
@@ -42,8 +46,8 @@ export class AppComponent {
     let addMode;
 
     this.store
-      .select((state) => state)
-      .subscribe((subscriber) => (addMode = subscriber['list'].addMode));
+      .select(selectAddMode)
+      .subscribe((subscriber) => (addMode = subscriber));
 
     this.store.dispatch(changeAddMode({ addMode: !addMode }));
 
@@ -63,7 +67,7 @@ export class AppComponent {
     let currentItem;
 
     this.store
-      .select((state) => state['list'].currentItem)
+      .select(selectCurrentItem)
       .subscribe((sub) => (currentItem = sub));
 
     return currentItem;
@@ -76,12 +80,12 @@ export class AppComponent {
       .select(selectList)
       .subscribe(
         (subscriber) =>
-          (list = subscriber['list'].filter(
+          (list = subscriber.filter(
             (mapItem: MapItem) => mapItem.actionType === ActionType.ADD_UPDATE
           ))
       );
 
-    api.markers
+    api.mapItems
       .GraphQLUpdate(list)
       .then(() => {
         this.showSnackbar('מידע התעדכן בהצלחה', 'סגור');

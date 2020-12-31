@@ -1,9 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { City } from '../city';
 import { MarkersService } from '../markers.service';
-import { add, changeAddMode, save } from '../store/actions/outbreak-list.actions';
+import {
+  changeAddMode,
+  changeCurrentItem,
+  save,
+} from '../store/actions/outbreak-list.actions';
 import { selectList } from '../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
@@ -18,7 +21,7 @@ import { ActionType } from 'angular-cesium';
 export class AddNewMarkerComponent implements OnInit {
   @Output() closeAddWindowEvent = new EventEmitter<string>();
   name = new FormControl('', [Validators.required]);
-  currentItem: City;
+  currentItem: MapItem;
 
   constructor(
     private store: Store,
@@ -27,13 +30,11 @@ export class AddNewMarkerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let list = [];
-
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (list = subscriber['list']));
-
-    this.currentItem = list[list.length - 1].entity;
+      .subscribe(
+        (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
+      );
   }
 
   getErrorMessage() {
@@ -44,20 +45,20 @@ export class AddNewMarkerComponent implements OnInit {
 
   save = () => {
     if (!this.name.hasError('required')) {
-      const newCity: City = {
-        _id: this.currentItem._id,
-        name: this.name.value,
-        position: this.currentItem.position,
-        flyPosition: this.currentItem.flyPosition,
-      };
+      const currentEntity = this.currentItem.entity;
 
       const newMapItem: MapItem = {
-        id: newCity._id,
-        entity: newCity,
+        id: this.currentItem.id,
+        entity: {
+          name: this.name.value,
+          position: currentEntity.position,
+        },
         actionType: ActionType.ADD_UPDATE,
+        saved: true,
       };
 
       this.store.dispatch(save({ item: newMapItem }));
+      this.store.dispatch(changeCurrentItem({ currentItem: newMapItem }));
       this.closeWindow();
       this.snackbar.openFromComponent(SnackbarComponent, {
         duration: 3000,
@@ -68,7 +69,7 @@ export class AddNewMarkerComponent implements OnInit {
 
   cancel = () => {
     this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMarker(this.currentItem._id);
+    this.markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
   };
 

@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { EventBusService, EmitEvent, Events } from '../event-bus.service';
+import { MapItem } from '../mapItem';
 import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
-import { selectList } from '../store/outbreak-list.selector';
+import { selectAddMode, selectList } from '../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +13,7 @@ import { selectList } from '../store/outbreak-list.selector';
   providers: [],
 })
 export class ListComponent implements OnInit {
-  @Input() items: string[] = [];
+  @Input() items: MapItem[] = [];
   currentItem: string;
 
   constructor(private eventbus: EventBusService, private store: Store) {}
@@ -22,18 +23,11 @@ export class ListComponent implements OnInit {
   itemClicked = (options: MatListOption[]) => {
     this.currentItem = options.map((o) => o.value)[0];
 
-    let mapItemsList;
+    const MapItemClicked = this.items.find(
+      (mapItem) => mapItem.id === this.currentItem
+    );
 
-    this.store
-      .select(selectList)
-      .subscribe((subscriber) => (mapItemsList = subscriber['list']));
-
-    const cityClicked = mapItemsList.find(
-      (mapItem) => mapItem.entity.name === this.currentItem
-    ).entity;
-
-    this.eventbus.emit(new EmitEvent(Events.MarkerSelect, cityClicked));
-
-    this.store.dispatch(changeCurrentItem({ currentItem: cityClicked }));
+    this.eventbus.emit(new EmitEvent(Events.MarkerSelect, MapItemClicked));
+    this.store.dispatch(changeCurrentItem({ currentItem: MapItemClicked }));
   };
 }

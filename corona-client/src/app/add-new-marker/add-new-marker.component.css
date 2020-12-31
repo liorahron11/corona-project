@@ -1,3 +1,7 @@
+.example-container {
+  margin-top: 1vh;
+}
+
 .example-container .mat-form-field + .mat-form-field {
   direction: rtl;
 }

@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const CONNECTION_STRING =
+  "mongodb+srv://liorahron11:Lior0101@cluster0.ca3b8.mongodb.net/coronaProject?retryWrites=true&w=majority";
+const mongoose = require("mongoose");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
-const markers = require("./routes/markers");
 const mapItems = require("./routes/mapItems");
 const assets = require("./routes/assets");
 const bodyParser = require("body-parser");
@@ -24,12 +26,7 @@ app.use(express.json());
 app.use("/assets", assets);
 app.use("/mapItems", mapItems);
 
-const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://liorahron11:Lior0101@cluster0.ca3b8.mongodb.net/coronaProject?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
-);
-
+mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {

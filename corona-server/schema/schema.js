@@ -1,15 +1,15 @@
 const graphql = require("graphql");
-const MapItemsService = require("../Services/MapItemsService");
+const { getAll, clean, addList } = require("../Services/MapItemsService");
 
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID,
   GraphQLFloat,
   GraphQLSchema,
   GraphQLList,
   GraphQLInputObjectType,
   GraphQLInt,
+  GraphQLBoolean,
 } = graphql;
 
 const MapItemType = new GraphQLObjectType({
@@ -18,16 +18,15 @@ const MapItemType = new GraphQLObjectType({
     _id: { type: GraphQLString },
     entity: { type: MarkerType },
     actionType: { type: GraphQLInt },
+    saved: { type: GraphQLBoolean },
   }),
 });
 
 const MarkerType = new GraphQLObjectType({
   name: "Marker",
   fields: () => ({
-    _id: { type: GraphQLID },
     name: { type: GraphQLString },
     position: { type: PositionType },
-    flyPosition: { type: PositionType },
   }),
 });
 
@@ -46,16 +45,15 @@ const MapItemInput = new GraphQLInputObjectType({
     _id: { type: GraphQLString },
     entity: { type: MarkerInput },
     actionType: { type: GraphQLInt },
+    saved: { type: GraphQLBoolean },
   }),
 });
 
 const MarkerInput = new GraphQLInputObjectType({
   name: "MarkerInput",
   fields: () => ({
-    _id: { type: GraphQLID },
     name: { type: GraphQLString },
     position: { type: PositionInput },
-    flyPosition: { type: PositionInput },
   }),
 });
 
@@ -71,17 +69,10 @@ const PositionInput = new GraphQLInputObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    Marker: {
-      type: MapItemType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, args) {
-        return MapItemsService.getById(args.id);
-      },
-    },
     Markers: {
       type: new GraphQLList(MapItemType),
       resolve(parent, args) {
-        return MapItemsService.getAll();
+        return getAll();
       },
     },
   },
@@ -93,7 +84,7 @@ const Mutation = new GraphQLObjectType({
     clearMarkers: {
       type: MapItemType,
       resolve(parent) {
-        return MapItemsService.clean();
+        return clean();
       },
     },
     setMarkers: {
@@ -102,7 +93,7 @@ const Mutation = new GraphQLObjectType({
         list: { type: new GraphQLList(MapItemInput) },
       },
       resolve: (parent, args) => {
-        return MapItemsService.addList(args.list);
+        return addList(args.list);
       },
     },
   },

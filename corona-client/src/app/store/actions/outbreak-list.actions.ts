@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { City } from '../../city';
 import { MapItem } from '../../mapItem';
 
 export const set = createAction(
@@ -29,5 +28,5 @@ export const changeAddMode = createAction(
 
 export const changeCurrentItem = createAction(
   '[currentItem] changeCurrentItem',
-  props<{ currentItem: City }>()
+  props<{ currentItem: MapItem }>()
 );
