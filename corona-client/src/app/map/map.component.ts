@@ -64,7 +64,7 @@ export class MapComponent implements OnInit {
         Events.MarkerSelect,
         (mapItem: MapItem) => {
           viewer.camera.flyTo({
-            destination: mapItem.entity.flyPosition,
+            destination: this.getFlyPosition(mapItem.entity.position),
           });
         }
       );
@@ -72,6 +72,15 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  getFlyPosition = (position) => {
+    const cartographic = Cesium.Cartographic.fromCartesian(position);
+    const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(10);
+    const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(10);
+    const DEFAULT_ALTITUDE = 50000;
+
+    return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
+  };
 
   loadMap = () => {
     return this.markersService.getUpdatedMap();

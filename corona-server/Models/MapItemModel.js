@@ -5,6 +5,7 @@ const mapItemsSchema = new mongoose.Schema(
     _id: String,
     actionType: Number,
     entity: Object,
+    saved: Boolean,
   },
   {
     collection: "MapItems",

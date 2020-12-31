@@ -5,4 +5,5 @@ export interface MapItem {
   id: string;
   actionType: ActionType;
   entity: Entity;
+  saved: boolean;
 }

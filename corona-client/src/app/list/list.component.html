@@ -6,9 +6,9 @@
   <mat-list-option
     *ngFor="let item of items"
     class="example-item"
-    [value]="item"
+    [value]="item.id"
   >
-    {{ item }}
+    {{ item.entity.name }}
   </mat-list-option>
 </mat-selection-list>
 

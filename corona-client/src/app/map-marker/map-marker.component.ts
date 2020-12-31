@@ -54,15 +54,18 @@ export class MapMarkerComponent implements OnInit {
             ellipsoid
           );
           const cartographic = ellipsoid.cartesianToCartographic(cartesian);
-          const lon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(10);
-          const lat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(10);
-          const alt = Cesium.Math.toDegrees(cartographic.height).toFixed(10);
+          const longitude = Cesium.Math.toDegrees(
+            cartographic.longitude
+          ).toFixed(15);
+          const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(
+            15
+          );
+          const height = Cesium.Math.toDegrees(cartographic.height).toFixed(15);
 
-          this.markersService.addMarker(
-            lon + lat,
-            lon.substring(1, 5) + lat.substring(1, 6),
-            Cesium.Cartesian3.fromDegrees(lon, lat, alt),
-            Cesium.Cartesian3.fromDegrees(lon, lat, 50000)
+          this.markersService.addMapItem(
+            longitude + latitude,
+            longitude.substring(1, 5) + latitude.substring(1, 6),
+            Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
           );
 
           this.openEdit();

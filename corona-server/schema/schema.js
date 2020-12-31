@@ -1,20 +1,15 @@
 const graphql = require("graphql");
-const {
-  getAll,
-  getById,
-  clean,
-  addList,
-} = require("../Services/MapItemsService");
+const { getAll, clean, addList } = require("../Services/MapItemsService");
 
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID,
   GraphQLFloat,
   GraphQLSchema,
   GraphQLList,
   GraphQLInputObjectType,
   GraphQLInt,
+  GraphQLBoolean,
 } = graphql;
 
 const MapItemType = new GraphQLObjectType({
@@ -23,6 +18,7 @@ const MapItemType = new GraphQLObjectType({
     _id: { type: GraphQLString },
     entity: { type: MarkerType },
     actionType: { type: GraphQLInt },
+    saved: { type: GraphQLBoolean },
   }),
 });
 
@@ -31,7 +27,6 @@ const MarkerType = new GraphQLObjectType({
   fields: () => ({
     name: { type: GraphQLString },
     position: { type: PositionType },
-    flyPosition: { type: PositionType },
   }),
 });
 
@@ -50,6 +45,7 @@ const MapItemInput = new GraphQLInputObjectType({
     _id: { type: GraphQLString },
     entity: { type: MarkerInput },
     actionType: { type: GraphQLInt },
+    saved: { type: GraphQLBoolean },
   }),
 });
 
@@ -58,7 +54,6 @@ const MarkerInput = new GraphQLInputObjectType({
   fields: () => ({
     name: { type: GraphQLString },
     position: { type: PositionInput },
-    flyPosition: { type: PositionInput },
   }),
 });
 
@@ -74,13 +69,6 @@ const PositionInput = new GraphQLInputObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    Marker: {
-      type: MapItemType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, args) {
-        return getById(args.id);
-      },
-    },
     Markers: {
       type: new GraphQLList(MapItemType),
       resolve(parent, args) {

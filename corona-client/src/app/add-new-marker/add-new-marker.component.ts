@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Entity } from '../entity';
 import { MarkersService } from '../markers.service';
 import {
   changeAddMode,
@@ -31,13 +30,11 @@ export class AddNewMarkerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let list: MapItem[] = [];
-
     this.store
       .select(selectList)
-      .subscribe((subscriber) => (list = subscriber));
-
-    this.currentItem = list[list.length - 1];
+      .subscribe(
+        (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
+      );
   }
 
   getErrorMessage() {
@@ -49,16 +46,15 @@ export class AddNewMarkerComponent implements OnInit {
   save = () => {
     if (!this.name.hasError('required')) {
       const currentEntity = this.currentItem.entity;
-      const newEntity: Entity = {
-        name: this.name.value,
-        position: currentEntity.position,
-        flyPosition: currentEntity.flyPosition,
-      };
 
       const newMapItem: MapItem = {
         id: this.currentItem.id,
-        entity: newEntity,
+        entity: {
+          name: this.name.value,
+          position: currentEntity.position,
+        },
         actionType: ActionType.ADD_UPDATE,
+        saved: true,
       };
 
       this.store.dispatch(save({ item: newMapItem }));
@@ -73,7 +69,7 @@ export class AddNewMarkerComponent implements OnInit {
 
   cancel = () => {
     this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMarker(this.currentItem.id);
+    this.markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
   };
 

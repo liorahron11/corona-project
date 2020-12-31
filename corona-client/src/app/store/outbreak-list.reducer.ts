@@ -56,8 +56,7 @@ const saveItem = (array, item) => {
 
   if (index > -1) {
     const tempMapItem: MapItem = {
-      ...tempArr[index],
-      entity: item.entity,
+      ...item,
       actionType: ActionType.ADD_UPDATE,
     };
     tempArr.splice(index, 1);
@@ -75,6 +74,7 @@ const removeItem = (array, id: string) => {
     const tempMapItem: MapItem = {
       ...tempArr[index],
       actionType: ActionType.DELETE,
+      saved: false,
     };
     tempArr.splice(index, 1);
     tempArr.push(tempMapItem);

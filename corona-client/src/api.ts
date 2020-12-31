@@ -7,9 +7,6 @@ const api = {
     GetAll: () => {
       return axios.get(`${API_URL}/mapItems`);
     },
-    GetById: (id) => {
-      return axios.get(`${API_URL}/mapItems/${id}`);
-    },
     GraphQLUpdate: (list) => {
       let newList = [];
       list.forEach((mapItem: MapItem) => {
@@ -17,6 +14,7 @@ const api = {
           _id: mapItem.id,
           entity: mapItem.entity,
           actionType: mapItem.actionType,
+          saved: true,
         });
       });
 

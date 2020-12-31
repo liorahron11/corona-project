@@ -22,7 +22,7 @@ export class MarkerDetailsComponent implements OnInit {
   }
 
   remove = () => {
-    this.markersService.deleteMarker(this.currentItem.id);
+    this.markersService.deleteMapItem(this.currentItem.id);
     this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
   };
 
