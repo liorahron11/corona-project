@@ -1,9 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../../services/markers.service/markers.service';
-import { EventBusService, Events } from '../../services/event-bus.service/event-bus.service';
-import { Subscription } from 'rxjs';
-import { MapItem } from '../../map-item';
+import {
+  EventBusService,
+  Events,
+} from '../../services/event-bus.service/event-bus.service';
+import { Observable, Subscription } from 'rxjs';
+import { MapItem } from '../../../map-item';
 
 @Component({
   selector: 'app-map',
@@ -36,10 +39,10 @@ export class MapComponent implements OnInit {
       sceneModePicker: false,
     };
 
-    const west = 31.5;
-    const east = 38.5;
-    const south = 29.0;
-    const north = 34.0;
+    const west: Number = 31.5;
+    const east: Number = 38.5;
+    const south: Number = 29.0;
+    const north: Number = 34.0;
     const israelLocation = Cesium.Rectangle.fromDegrees(
       west,
       south,
@@ -73,20 +76,20 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getFlyPosition = (position) => {
+  private getFlyPosition(position): Object {
     const cartographic = Cesium.Cartographic.fromCartesian(position);
     const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(10);
     const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(10);
     const DEFAULT_ALTITUDE = 50000;
 
     return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
-  };
+  }
 
-  loadMap = () => {
+  private loadMap(): Observable<MapItem> {
     return this.markersService.getUpdatedMap();
-  };
+  }
 
-  openEditWindow(): void {
+  private openEditWindow(): void {
     this.openEditWindowEvent.next();
   }
 }

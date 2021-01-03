@@ -6,11 +6,11 @@ import {
   changeAddMode,
   changeCurrentItem,
   save,
-} from '../../store/actions/outbreak-list.actions';
+} from '../../store/outbreak-list.actions';
 import { selectList } from '../../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
-import { MapItem } from '../../map-item';
+import { MapItem } from '../../../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({
@@ -20,7 +20,7 @@ import { ActionType } from 'angular-cesium';
 })
 export class AddNewMarkerComponent implements OnInit {
   @Output() closeAddWindowEvent = new EventEmitter<string>();
-  name = new FormControl('', [Validators.required]);
+  name: FormControl = new FormControl('', [Validators.required]);
   currentItem: MapItem;
 
   constructor(
@@ -37,13 +37,13 @@ export class AddNewMarkerComponent implements OnInit {
       );
   }
 
-  getErrorMessage() {
+  private getErrorMessage(): string {
     if (this.name.hasError('required')) {
       return 'שם לא הוזן';
     }
   }
 
-  save = () => {
+  private save(): void {
     if (!this.name.hasError('required')) {
       const currentEntity = this.currentItem.entity;
 
@@ -65,15 +65,15 @@ export class AddNewMarkerComponent implements OnInit {
         data: { message: 'מיקום נוסף בהצלחה', action: 'סגור' },
       });
     }
-  };
+  }
 
-  cancel = () => {
+  private cancel(): void {
     this.store.dispatch(changeAddMode({ addMode: false }));
     this.markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
-  };
+  }
 
-  closeWindow(): void {
+  private closeWindow(): void {
     this.closeAddWindowEvent.next();
   }
 }

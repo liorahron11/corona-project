@@ -11,7 +11,7 @@ import {
   EventBusService,
   Events,
 } from '../../services/event-bus.service/event-bus.service';
-import { MapItem } from '../../map-item';
+import { MapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service/markers.service';
 import { selectAddMode } from '../../store/outbreak-list.selector';
 
@@ -25,6 +25,7 @@ export class MapMarkerComponent implements OnInit {
   @Input() entities: MapItem[];
   MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
   eventbusSub: Subscription;
+  addMode: boolean;
 
   constructor(
     private eventManager: MapEventsManagerService,
@@ -41,12 +42,7 @@ export class MapMarkerComponent implements OnInit {
     const clickEvent = this.eventManager.register(eventRegistration);
 
     this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
-      let addMode;
-      this.store
-        .select(selectAddMode)
-        .subscribe((subscriber) => (addMode = subscriber));
-
-      if (addMode) {
+      if (this.addMode) {
         this.setCrosshairPointer(viewer);
 
         clickEvent.subscribe((result) => {
@@ -57,13 +53,15 @@ export class MapMarkerComponent implements OnInit {
             ellipsoid
           );
           const cartographic = ellipsoid.cartesianToCartographic(cartesian);
-          const longitude = Cesium.Math.toDegrees(
+          const longitude: string = Cesium.Math.toDegrees(
             cartographic.longitude
           ).toFixed(15);
-          const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(
-            15
-          );
-          const height = Cesium.Math.toDegrees(cartographic.height).toFixed(15);
+          const latitude: string = Cesium.Math.toDegrees(
+            cartographic.latitude
+          ).toFixed(15);
+          const height: string = Cesium.Math.toDegrees(
+            cartographic.height
+          ).toFixed(15);
 
           this.markersService.addMapItem(
             longitude + latitude,
@@ -82,7 +80,11 @@ export class MapMarkerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store
+      .select(selectAddMode)
+      .subscribe((subscriber) => (this.addMode = subscriber));
+  }
 
   openEdit(): void {
     this.openEditWindow.next();
