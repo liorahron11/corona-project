@@ -23,9 +23,9 @@ import { selectAddMode } from '../../store/outbreak-list.selector';
 export class MapMarkerComponent implements OnInit {
   @Output() openEditWindow: EventEmitter<string> = new EventEmitter<string>();
   @Input() entities: MapItem[];
-  MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
-  eventbusSub: Subscription;
-  addMode: boolean;
+  public MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
+  private eventbusSub: Subscription;
+  private addMode: boolean;
 
   constructor(
     private eventManager: MapEventsManagerService,
@@ -86,15 +86,15 @@ export class MapMarkerComponent implements OnInit {
       .subscribe((subscriber) => (this.addMode = subscriber));
   }
 
-  openEdit(): void {
+  private openEdit(): void {
     this.openEditWindow.next();
   }
 
-  setCrosshairPointer(viewer): void {
+  private setCrosshairPointer(viewer): void {
     viewer._container.style.cursor = `crosshair`;
   }
 
-  setDefaultPointer(viewer): void {
+  private setDefaultPointer(viewer): void {
     viewer._container.style.cursor = `default`;
   }
 }

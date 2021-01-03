@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { faShieldVirus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faShieldVirus,
+  faPlus,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import {
   EmitEvent,
@@ -24,10 +28,10 @@ import { ActionType } from 'angular-cesium';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  virusIcon = faShieldVirus;
-  plusIcon = faPlus;
-  editDetails: boolean = false;
-  addMode: boolean;
+  public virusIcon: IconDefinition = faShieldVirus;
+  public plusIcon: IconDefinition = faPlus;
+  public editDetails: boolean = false;
+  public addMode: boolean;
 
   constructor(
     private store: Store,
@@ -51,21 +55,21 @@ export class AppComponent {
       .subscribe((subscriber) => (this.addMode = subscriber));
   }
 
-  private toggleAddMode(): void {
+  public toggleAddMode(): void {
     this.store.dispatch(changeAddMode({ addMode: !this.addMode }));
     this.eventbus.emit(new EmitEvent(Events.ToggleAddMode));
   }
 
-  private turnOffAddMode(): void {
+  public turnOffAddMode(): void {
     this.editDetails = false;
     this.store.dispatch(changeAddMode({ addMode: this.editDetails }));
   }
 
-  private turnOnEditMode(): void {
+  public turnOnEditMode(): void {
     this.editDetails = true;
   }
 
-  private showDetails(): MapItem {
+  public showDetails(): MapItem {
     let currentItem: MapItem;
 
     this.store
@@ -75,7 +79,7 @@ export class AppComponent {
     return currentItem;
   }
 
-  private update(): void {
+  public update(): void {
     let list: MapItem[] = [];
 
     this.store

@@ -9,7 +9,7 @@ import { selectList } from '../../store/outbreak-list.selector';
   styleUrls: ['./scroller.component.css'],
 })
 export class ScrollerComponent implements OnInit {
-  items: MapItem[] = [];
+  public items: MapItem[] = [];
 
   constructor(private store: Store) {
     this.store.select(selectList).subscribe((subscriber) => {
