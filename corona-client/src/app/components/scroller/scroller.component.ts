@@ -9,7 +9,7 @@ import { selectList } from '../../store/outbreak-list.selector';
   styleUrls: ['./scroller.component.css'],
 })
 export class ScrollerComponent implements OnInit {
-  public items: IMapItem[] = [];
+  private _items: IMapItem[] = [];
 
   constructor(private store: Store) {
     this.store.select(selectList).subscribe((subscriber) => {
@@ -18,4 +18,12 @@ export class ScrollerComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  get items(): IMapItem[] {
+    return this._items;
+  }
+
+  set items(value: IMapItem[]) {
+    this._items = value;
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IMapItem } from '../../../map-item';
-import { MarkersService } from '../../services/markers.service/markers.service';
+import { MarkersService } from '../../services/markers.service';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
 import { selectCurrentItem } from '../../store/outbreak-list.selector';
 
@@ -11,7 +11,7 @@ import { selectCurrentItem } from '../../store/outbreak-list.selector';
   styleUrls: ['./marker-details.component.css'],
 })
 export class MarkerDetailsComponent implements OnInit {
-  public currentItem: IMapItem;
+  private _currentItem: IMapItem;
 
   constructor(private store: Store, private markersService: MarkersService) {}
 
@@ -32,5 +32,13 @@ export class MarkerDetailsComponent implements OnInit {
     return ` ${position.x},
             ${position.y},
             ${position.z}`;
+  }
+
+  get currentItem(): IMapItem {
+    return this._currentItem;
+  }
+
+  set currentItem(value: IMapItem) {
+    this._currentItem = value;
   }
 }

@@ -6,13 +6,13 @@ import {
   EventRegistrationInput,
   MapEventsManagerService,
 } from 'angular-cesium';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   EventBusService,
   Events,
-} from '../../services/event-bus.service/event-bus.service';
+} from '../../services/event-bus.service';
 import { IMapItem } from '../../../map-item';
-import { MarkersService } from '../../services/markers.service/markers.service';
+import { MarkersService } from '../../services/markers.service';
 import { selectAddMode } from '../../store/outbreak-list.selector';
 
 @Component({
@@ -21,11 +21,12 @@ import { selectAddMode } from '../../store/outbreak-list.selector';
   styleUrls: ['./map-marker.component.css'],
 })
 export class MapMarkerComponent implements OnInit {
-  @Output() openEditWindow: EventEmitter<string> = new EventEmitter<string>();
-  @Input() entities: IMapItem[];
-  public MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
-  private eventbusSub: Subscription;
-  private addMode: boolean;
+  @Output()
+  public openEditWindow: EventEmitter<string> = new EventEmitter<string>();
+  @Input() public entities: Observable<IMapItem>;
+  private _MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
+  private _eventbusSub: Subscription;
+  private _addMode: boolean;
 
   constructor(
     private eventManager: MapEventsManagerService,
@@ -83,7 +84,7 @@ export class MapMarkerComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .select(selectAddMode)
-      .subscribe((subscriber) => (this.addMode = subscriber));
+      .subscribe((subscriber) => (this._addMode = subscriber));
   }
 
   private openEdit(): void {
@@ -96,5 +97,21 @@ export class MapMarkerComponent implements OnInit {
 
   private setDefaultPointer(viewer): void {
     viewer._container.style.cursor = `default`;
+  }
+
+  get mapMarkerURL(): string {
+    return this._MAP_MARKER_URL;
+  }
+
+  get addMode(): boolean {
+    return this._addMode;
+  }
+
+  set addMode(value: boolean) {
+    this._addMode = value;
+  }
+
+  set eventbusSub(value: Subscription) {
+    this._eventbusSub = value;
   }
 }

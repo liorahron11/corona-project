@@ -9,7 +9,7 @@ import {
   EmitEvent,
   EventBusService,
   Events,
-} from './services/event-bus.service/event-bus.service';
+} from './services/event-bus.service';
 import { changeAddMode, set } from './store/outbreak-list.actions';
 import {
   selectAddMode,
@@ -28,10 +28,10 @@ import { ActionType } from 'angular-cesium';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public virusIcon: IconDefinition = faShieldVirus;
-  public plusIcon: IconDefinition = faPlus;
-  public editDetails: boolean = false;
-  public addMode: boolean;
+  private _virusIcon: IconDefinition = faShieldVirus;
+  private _plusIcon: IconDefinition = faPlus;
+  private _editDetails: boolean = false;
+  private _addMode: boolean;
 
   constructor(
     private store: Store,
@@ -105,5 +105,29 @@ export class AppComponent {
       duration: 3000,
       data: { message: message, action: action },
     });
+  }
+
+  get virusIcon(): IconDefinition {
+    return this._virusIcon;
+  }
+
+  get plusIcon(): IconDefinition {
+    return this._plusIcon;
+  }
+
+  get editDetails(): boolean {
+    return this._editDetails;
+  }
+
+  get addMode(): boolean {
+    return this._addMode;
+  }
+
+  set editDetails(value: boolean) {
+    this._editDetails = value;
+  }
+
+  set addMode(value: boolean) {
+    this._addMode = value;
   }
 }

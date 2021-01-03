@@ -5,7 +5,7 @@ import {
   EventBusService,
   EmitEvent,
   Events,
-} from '../../services/event-bus.service/event-bus.service';
+} from '../../services/event-bus.service';
 import { IMapItem } from '../../../map-item';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
 
@@ -16,8 +16,8 @@ import { changeCurrentItem } from '../../store/outbreak-list.actions';
   providers: [],
 })
 export class ListComponent implements OnInit {
-  @Input() items: IMapItem[] = [];
-  private currentItem: string;
+  @Input() public items: IMapItem[] = [];
+  private _currentItem: string;
 
   constructor(private eventbus: EventBusService, private store: Store) {}
 
@@ -32,5 +32,13 @@ export class ListComponent implements OnInit {
 
     this.eventbus.emit(new EmitEvent(Events.MarkerSelect, mapItemClicked));
     this.store.dispatch(changeCurrentItem({ currentItem: mapItemClicked }));
+  }
+
+  get currentItem(): string {
+    return this._currentItem;
+  }
+
+  set currentItem(value: string) {
+    this._currentItem = value;
   }
 }

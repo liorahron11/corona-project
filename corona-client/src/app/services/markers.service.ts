@@ -3,9 +3,9 @@ import { Store } from '@ngrx/store';
 import { ActionType } from 'angular-cesium';
 import { Observable } from 'rxjs';
 import { mergeAll } from 'rxjs/operators';
-import { IMapItem } from '../../../map-item';
-import { add, remove } from '../../store/outbreak-list.actions';
-import { selectList } from '../../store/outbreak-list.selector';
+import { IMapItem } from '../../map-item';
+import { add, remove } from '../store/outbreak-list.actions';
+import { selectList } from '../store/outbreak-list.selector';
 
 @Injectable({
   providedIn: 'root',

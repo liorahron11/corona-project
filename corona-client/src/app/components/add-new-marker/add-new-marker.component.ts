@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { MarkersService } from '../../services/markers.service/markers.service';
+import { MarkersService } from '../../services/markers.service';
 import {
   changeAddMode,
   changeCurrentItem,
@@ -19,9 +19,9 @@ import { ActionType } from 'angular-cesium';
   styleUrls: ['./add-new-marker.component.css'],
 })
 export class AddNewMarkerComponent implements OnInit {
-  @Output() closeAddWindowEvent = new EventEmitter<string>();
-  public name: FormControl = new FormControl('', [Validators.required]);
-  public currentItem: IMapItem;
+  @Output() public closeAddWindowEvent = new EventEmitter<string>();
+  private _name: FormControl = new FormControl('', [Validators.required]);
+  private _currentItem: IMapItem;
 
   constructor(
     private store: Store,
@@ -69,11 +69,23 @@ export class AddNewMarkerComponent implements OnInit {
 
   public cancel(): void {
     this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteIMapItem(this.currentItem.id);
+    this.markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
   }
 
   private closeWindow(): void {
     this.closeAddWindowEvent.next();
+  }
+
+  get name(): FormControl {
+    return this._name;
+  }
+
+  get currentItem(): IMapItem {
+    return this._currentItem;
+  }
+
+  set currentItem(mapItem: IMapItem) {
+    this._currentItem = mapItem;
   }
 }

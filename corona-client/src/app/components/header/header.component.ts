@@ -7,8 +7,8 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() title: string;
-  @Input() icon: IconDefinition;
+  @Input() public title: string;
+  @Input() public icon: IconDefinition;
 
   constructor() {}
 

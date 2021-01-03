@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
-import { MarkersService } from '../../services/markers.service/markers.service';
+import { MarkersService } from '../../services/markers.service';
 import {
   EventBusService,
   Events,
-} from '../../services/event-bus.service/event-bus.service';
+} from '../../services/event-bus.service';
 import { Observable, Subscription } from 'rxjs';
 import { IMapItem } from '../../../map-item';
 
@@ -16,8 +16,8 @@ import { IMapItem } from '../../../map-item';
 })
 export class MapComponent implements OnInit {
   @Output()
-  private openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
-  private eventbusSub: Subscription;
+  public openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
+  private _eventbusSub: Subscription;
 
   constructor(
     private viewerConf: ViewerConfiguration,
@@ -91,5 +91,13 @@ export class MapComponent implements OnInit {
 
   public openEditWindow(): void {
     this.openEditWindowEvent.next();
+  }
+
+  get eventbusSub(): Subscription {
+    return this._eventbusSub;
+  }
+
+  set eventbusSub(value: Subscription) {
+    this._eventbusSub = value;
   }
 }
