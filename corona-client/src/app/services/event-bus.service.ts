@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EventBusService {
-  private subject$ = new Subject<any>();
+  private eventsSubject$ = new Subject<EmitEvent>();
 
   on(event: Events, action: any): Subscription {
-    return this.subject$
+    return this.eventsSubject$
       .pipe(
         filter((e: EmitEvent) => {
           return e.name === event;
@@ -22,7 +22,7 @@ export class EventBusService {
   }
 
   emit(event: EmitEvent) {
-    this.subject$.next(event);
+    this.eventsSubject$.next(event);
   }
 }
 

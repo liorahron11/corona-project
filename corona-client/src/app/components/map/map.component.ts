@@ -1,12 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
-import { MarkersService } from '../../services/markers.service/markers.service';
-import {
-  EventBusService,
-  Events,
-} from '../../services/event-bus.service/event-bus.service';
+import { MarkersService } from '../../services/markers.service';
+import { EventBusService, Events } from '../../services/event-bus.service';
 import { Observable, Subscription } from 'rxjs';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 
 @Component({
   selector: 'app-map',
@@ -16,8 +13,8 @@ import { MapItem } from '../../../map-item';
 })
 export class MapComponent implements OnInit {
   @Output()
-  private openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
-  private eventbusSub: Subscription;
+  public openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
+  private _eventbusSub: Subscription;
 
   constructor(
     private viewerConf: ViewerConfiguration,
@@ -65,7 +62,7 @@ export class MapComponent implements OnInit {
 
       this.eventbusSub = this.eventbus.on(
         Events.MarkerSelect,
-        (mapItem: MapItem) => {
+        (mapItem: IMapItem) => {
           viewer.camera.flyTo({
             destination: this.getFlyPosition(mapItem.entity.position),
           });
@@ -85,11 +82,19 @@ export class MapComponent implements OnInit {
     return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
   }
 
-  public loadMap(): Observable<MapItem> {
+  public loadMap(): Observable<IMapItem> {
     return this.markersService.getUpdatedMap();
   }
 
   public openEditWindow(): void {
     this.openEditWindowEvent.next();
+  }
+
+  get eventbusSub(): Subscription {
+    return this._eventbusSub;
+  }
+
+  set eventbusSub(value: Subscription) {
+    this._eventbusSub = value;
   }
 }

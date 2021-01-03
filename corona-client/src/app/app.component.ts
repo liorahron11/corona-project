@@ -9,7 +9,7 @@ import {
   EmitEvent,
   EventBusService,
   Events,
-} from './services/event-bus.service/event-bus.service';
+} from './services/event-bus.service';
 import { changeAddMode, set } from './store/outbreak-list.actions';
 import {
   selectAddMode,
@@ -19,7 +19,7 @@ import {
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { MapItem } from '../map-item';
+import { IMapItem } from '../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({
@@ -28,18 +28,19 @@ import { ActionType } from 'angular-cesium';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public virusIcon: IconDefinition = faShieldVirus;
-  public plusIcon: IconDefinition = faPlus;
-  public editDetails: boolean = false;
-  public addMode: boolean;
+  private _virusIcon: IconDefinition = faShieldVirus;
+  private _plusIcon: IconDefinition = faPlus;
+  private _editDetails: boolean = false;
+  private _addMode: boolean;
+  private _currentItem: IMapItem;
+  private _mapItemsList: IMapItem[];
 
   constructor(
     private store: Store,
     private eventbus: EventBusService,
     private snackbar: MatSnackBar
   ) {
-    api.mapItems
-      .GetAll()
+    api.MapItems.GetAll()
       .then((res) => {
         this.store.dispatch(set({ list: res.data }));
       })
@@ -53,6 +54,19 @@ export class AppComponent {
     this.store
       .select(selectAddMode)
       .subscribe((subscriber) => (this.addMode = subscriber));
+
+    this.store
+      .select(selectCurrentItem)
+      .subscribe((sub) => (this.currentItem = sub));
+
+    this.store
+      .select(selectList)
+      .subscribe(
+        (subscriber) =>
+          (this.mapItemsList = subscriber.filter(
+            (mapItem: IMapItem) => mapItem.actionType === ActionType.ADD_UPDATE
+          ))
+      );
   }
 
   public toggleAddMode(): void {
@@ -69,30 +83,8 @@ export class AppComponent {
     this.editDetails = true;
   }
 
-  public showDetails(): MapItem {
-    let currentItem: MapItem;
-
-    this.store
-      .select(selectCurrentItem)
-      .subscribe((sub) => (currentItem = sub));
-
-    return currentItem;
-  }
-
   public update(): void {
-    let list: MapItem[] = [];
-
-    this.store
-      .select(selectList)
-      .subscribe(
-        (subscriber) =>
-          (list = subscriber.filter(
-            (mapItem: MapItem) => mapItem.actionType === ActionType.ADD_UPDATE
-          ))
-      );
-
-    api.mapItems
-      .GraphQLUpdate(list)
+    api.MapItems.GraphQLUpdate(this.mapItemsList)
       .then(() => {
         this.showSnackbar('מידע התעדכן בהצלחה', 'סגור');
       })
@@ -107,5 +99,45 @@ export class AppComponent {
       duration: 3000,
       data: { message: message, action: action },
     });
+  }
+
+  get virusIcon(): IconDefinition {
+    return this._virusIcon;
+  }
+
+  get plusIcon(): IconDefinition {
+    return this._plusIcon;
+  }
+
+  get editDetails(): boolean {
+    return this._editDetails;
+  }
+
+  get addMode(): boolean {
+    return this._addMode;
+  }
+
+  get currentItem(): IMapItem {
+    return this._currentItem;
+  }
+
+  get mapItemsList(): IMapItem[] {
+    return this._mapItemsList;
+  }
+
+  set mapItemsList(value: IMapItem[]) {
+    this._mapItemsList = value;
+  }
+
+  set currentItem(value: IMapItem) {
+    this._currentItem = value;
+  }
+
+  set editDetails(value: boolean) {
+    this._editDetails = value;
+  }
+
+  set addMode(value: boolean) {
+    this._addMode = value;
   }
 }

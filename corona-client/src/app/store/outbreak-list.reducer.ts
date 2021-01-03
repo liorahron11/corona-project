@@ -1,12 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as OutbreakListActions from './outbreak-list.actions';
-import { MapItem } from '../../map-item';
+import { IMapItem } from '../../map-item';
 import { ActionType } from 'angular-cesium';
 
 export interface State {
-  list: MapItem[];
+  list: IMapItem[];
   addMode: boolean;
-  currentItem: MapItem | undefined;
+  currentItem: IMapItem | undefined;
 }
 
 const initialState: State = {
@@ -19,7 +19,7 @@ export const outbreakListReducer = createReducer(
   initialState,
   on(OutbreakListActions.set, (state, { list }) => ({
     ...state,
-    list: list,
+    list,
   })),
   on(OutbreakListActions.add, (state, { item }) => ({
     ...state,
@@ -31,11 +31,11 @@ export const outbreakListReducer = createReducer(
   })),
   on(OutbreakListActions.changeAddMode, (state, { addMode }) => ({
     ...state,
-    addMode: addMode,
+    addMode,
   })),
   on(OutbreakListActions.changeCurrentItem, (state, { currentItem }) => ({
     ...state,
-    currentItem: currentItem,
+    currentItem,
   })),
   on(OutbreakListActions.save, (state, { item }) => ({
     ...state,
@@ -43,19 +43,21 @@ export const outbreakListReducer = createReducer(
   }))
 );
 
-const addItem = (array, item) => {
-  const newArray = [...array];
+const addItem = (array: IMapItem[], item: IMapItem): IMapItem[] => {
+  const newArray: IMapItem[] = [...array];
   newArray.push(item);
 
   return newArray;
 };
 
-const saveItem = (array, item) => {
-  let tempArr = [...array];
-  const index = array.findIndex((arrayItem) => arrayItem.id === item.id);
+const saveItem = (array: IMapItem[], item: IMapItem): IMapItem[] => {
+  let tempArr: IMapItem[] = [...array];
+  const index: number = array.findIndex(
+    (arrayItem: IMapItem) => arrayItem.id === item.id
+  );
 
   if (index > -1) {
-    const tempMapItem: MapItem = {
+    const tempMapItem: IMapItem = {
       ...item,
       actionType: ActionType.ADD_UPDATE,
     };
@@ -66,12 +68,12 @@ const saveItem = (array, item) => {
   return tempArr;
 };
 
-const removeItem = (array, id: string) => {
-  let tempArr = [...array];
-  const index = array.findIndex((item: MapItem) => item.id === id);
+const removeItem = (array: IMapItem[], id: string): IMapItem[] => {
+  let tempArr: IMapItem[] = [...array];
+  const index: number = array.findIndex((item: IMapItem) => item.id === id);
 
   if (index > -1) {
-    const tempMapItem: MapItem = {
+    const tempMapItem: IMapItem = {
       ...tempArr[index],
       actionType: ActionType.DELETE,
       saved: false,

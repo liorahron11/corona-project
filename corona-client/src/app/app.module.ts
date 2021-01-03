@@ -29,7 +29,7 @@ import { StoreModule } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { MapMarkerComponent } from './components/map-marker/map-marker.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import * as fromOutbreakList from './store/outbreak-list.reducer';
+import { reducer } from './store/outbreak-list.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AddNewMarkerComponent } from './components/add-new-marker/add-new-marker.component';
@@ -68,7 +68,7 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     NzPopconfirmModule,
-    StoreModule.forRoot({ list: fromOutbreakList.reducer }),
+    StoreModule.forRoot({ storeState: reducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production,

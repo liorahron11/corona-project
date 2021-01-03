@@ -2,21 +2,21 @@ import { createSelector } from '@ngrx/store';
 import { State } from './outbreak-list.reducer';
 
 export const selectState = createSelector(
-  (state: State) => state.list,
+  (state: { storeState: State }) => state.storeState,
   (state) => state
 );
 
 export const selectList = createSelector(
-  (state: State) => state.list,
-  (state) => state['list']
+  (state: { storeState: State }) => state.storeState,
+  (state) => state.list
 );
 
 export const selectCurrentItem = createSelector(
-  (state: State) => state.list,
-  (state) => state['currentItem']
+  (state: { storeState: State }) => state.storeState,
+  (state) => state.currentItem
 );
 
 export const selectAddMode = createSelector(
-  (state: State) => state.list,
-  (state) => state['addMode']
+  (state: { storeState: State }) => state.storeState,
+  (state) => state.addMode
 );
