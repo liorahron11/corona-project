@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { MapItem } from './map-item';
+import { IMapItem } from './map-item';
 const API_URL = 'http://localhost:9000';
 
 const api = {
-  mapItems: {
+  MapItems: {
     GetAll: () => {
       return axios.get(`${API_URL}/mapItems`);
     },
     GraphQLUpdate: (list) => {
       let newList = [];
-      list.forEach((mapItem: MapItem) => {
+      list.forEach((mapItem: IMapItem) => {
         newList.push({
           _id: mapItem.id,
           entity: mapItem.entity,

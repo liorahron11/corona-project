@@ -1,4 +1,4 @@
-export interface Entity {
+export interface IEntity {
   name: string;
   position: any;
 }

@@ -6,7 +6,7 @@ import {
   Events,
 } from '../../services/event-bus.service/event-bus.service';
 import { Observable, Subscription } from 'rxjs';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 
 @Component({
   selector: 'app-map',
@@ -65,7 +65,7 @@ export class MapComponent implements OnInit {
 
       this.eventbusSub = this.eventbus.on(
         Events.MarkerSelect,
-        (mapItem: MapItem) => {
+        (mapItem: IMapItem) => {
           viewer.camera.flyTo({
             destination: this.getFlyPosition(mapItem.entity.position),
           });
@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
     return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
   }
 
-  public loadMap(): Observable<MapItem> {
+  public loadMap(): Observable<IMapItem> {
     return this.markersService.getUpdatedMap();
   }
 

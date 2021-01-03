@@ -19,7 +19,7 @@ import {
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { MapItem } from '../map-item';
+import { IMapItem } from '../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({
@@ -38,8 +38,7 @@ export class AppComponent {
     private eventbus: EventBusService,
     private snackbar: MatSnackBar
   ) {
-    api.mapItems
-      .GetAll()
+    api.MapItems.GetAll()
       .then((res) => {
         this.store.dispatch(set({ list: res.data }));
       })
@@ -69,8 +68,8 @@ export class AppComponent {
     this.editDetails = true;
   }
 
-  public showDetails(): MapItem {
-    let currentItem: MapItem;
+  public showDetails(): IMapItem {
+    let currentItem: IMapItem;
 
     this.store
       .select(selectCurrentItem)
@@ -80,19 +79,18 @@ export class AppComponent {
   }
 
   public update(): void {
-    let list: MapItem[] = [];
+    let list: IMapItem[] = [];
 
     this.store
       .select(selectList)
       .subscribe(
         (subscriber) =>
           (list = subscriber.filter(
-            (mapItem: MapItem) => mapItem.actionType === ActionType.ADD_UPDATE
+            (mapItem: IMapItem) => mapItem.actionType === ActionType.ADD_UPDATE
           ))
       );
 
-    api.mapItems
-      .GraphQLUpdate(list)
+    api.MapItems.GraphQLUpdate(list)
       .then(() => {
         this.showSnackbar('מידע התעדכן בהצלחה', 'סגור');
       })

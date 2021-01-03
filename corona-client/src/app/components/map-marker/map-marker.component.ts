@@ -11,7 +11,7 @@ import {
   EventBusService,
   Events,
 } from '../../services/event-bus.service/event-bus.service';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service/markers.service';
 import { selectAddMode } from '../../store/outbreak-list.selector';
 
@@ -22,7 +22,7 @@ import { selectAddMode } from '../../store/outbreak-list.selector';
 })
 export class MapMarkerComponent implements OnInit {
   @Output() openEditWindow: EventEmitter<string> = new EventEmitter<string>();
-  @Input() entities: MapItem[];
+  @Input() entities: IMapItem[];
   public MAP_MARKER_URL: string = 'http://localhost:9000/assets/map-marker';
   private eventbusSub: Subscription;
   private addMode: boolean;

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ActionType } from 'angular-cesium';
 import { Observable } from 'rxjs';
 import { mergeAll } from 'rxjs/operators';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 import { add, remove } from '../../store/outbreak-list.actions';
 import { selectList } from '../../store/outbreak-list.selector';
 
@@ -14,7 +14,7 @@ export class MarkersService {
   constructor(private store: Store) {}
 
   public addMapItem(id: string, name: string, position: object): void {
-    const mapItemToAdd: MapItem = {
+    const mapItemToAdd: IMapItem = {
       id,
       entity: {
         name,
@@ -31,7 +31,7 @@ export class MarkersService {
     this.store.dispatch(remove({ id: id }));
   }
 
-  public getUpdatedMap(): Observable<MapItem> {
+  public getUpdatedMap(): Observable<IMapItem> {
     return this.store.select(selectList).pipe(mergeAll());
   }
 }

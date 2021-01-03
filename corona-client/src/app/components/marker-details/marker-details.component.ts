@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service/markers.service';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
 import { selectCurrentItem } from '../../store/outbreak-list.selector';
@@ -11,7 +11,7 @@ import { selectCurrentItem } from '../../store/outbreak-list.selector';
   styleUrls: ['./marker-details.component.css'],
 })
 export class MarkerDetailsComponent implements OnInit {
-  public currentItem: MapItem;
+  public currentItem: IMapItem;
 
   constructor(private store: Store, private markersService: MarkersService) {}
 

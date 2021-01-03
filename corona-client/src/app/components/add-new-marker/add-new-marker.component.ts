@@ -10,7 +10,7 @@ import {
 import { selectList } from '../../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
-import { MapItem } from '../../../map-item';
+import { IMapItem } from '../../../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({
@@ -21,7 +21,7 @@ import { ActionType } from 'angular-cesium';
 export class AddNewMarkerComponent implements OnInit {
   @Output() closeAddWindowEvent = new EventEmitter<string>();
   public name: FormControl = new FormControl('', [Validators.required]);
-  public currentItem: MapItem;
+  public currentItem: IMapItem;
 
   constructor(
     private store: Store,
@@ -47,7 +47,7 @@ export class AddNewMarkerComponent implements OnInit {
     if (!this.name.hasError('required')) {
       const currentEntity = this.currentItem.entity;
 
-      const newMapItem: MapItem = {
+      const newMapItem: IMapItem = {
         id: this.currentItem.id,
         entity: {
           name: this.name.value,
@@ -69,7 +69,7 @@ export class AddNewMarkerComponent implements OnInit {
 
   public cancel(): void {
     this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMapItem(this.currentItem.id);
+    this.markersService.deleteIMapItem(this.currentItem.id);
     this.closeWindow();
   }
 
