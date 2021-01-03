@@ -32,6 +32,8 @@ export class AppComponent {
   private _plusIcon: IconDefinition = faPlus;
   private _editDetails: boolean = false;
   private _addMode: boolean;
+  private _currentItem: IMapItem;
+  private _mapItemsList: IMapItem[];
 
   constructor(
     private store: Store,
@@ -52,6 +54,19 @@ export class AppComponent {
     this.store
       .select(selectAddMode)
       .subscribe((subscriber) => (this.addMode = subscriber));
+
+    this.store
+      .select(selectCurrentItem)
+      .subscribe((sub) => (this.currentItem = sub));
+
+    this.store
+      .select(selectList)
+      .subscribe(
+        (subscriber) =>
+          (this.mapItemsList = subscriber.filter(
+            (mapItem: IMapItem) => mapItem.actionType === ActionType.ADD_UPDATE
+          ))
+      );
   }
 
   public toggleAddMode(): void {
@@ -68,29 +83,8 @@ export class AppComponent {
     this.editDetails = true;
   }
 
-  public showDetails(): IMapItem {
-    let currentItem: IMapItem;
-
-    this.store
-      .select(selectCurrentItem)
-      .subscribe((sub) => (currentItem = sub));
-
-    return currentItem;
-  }
-
   public update(): void {
-    let list: IMapItem[] = [];
-
-    this.store
-      .select(selectList)
-      .subscribe(
-        (subscriber) =>
-          (list = subscriber.filter(
-            (mapItem: IMapItem) => mapItem.actionType === ActionType.ADD_UPDATE
-          ))
-      );
-
-    api.MapItems.GraphQLUpdate(list)
+    api.MapItems.GraphQLUpdate(this.mapItemsList)
       .then(() => {
         this.showSnackbar('מידע התעדכן בהצלחה', 'סגור');
       })
@@ -121,6 +115,22 @@ export class AppComponent {
 
   get addMode(): boolean {
     return this._addMode;
+  }
+
+  get currentItem(): IMapItem {
+    return this._currentItem;
+  }
+
+  get mapItemsList(): IMapItem[] {
+    return this._mapItemsList;
+  }
+
+  set mapItemsList(value: IMapItem[]) {
+    this._mapItemsList = value;
+  }
+
+  set currentItem(value: IMapItem) {
+    this._currentItem = value;
   }
 
   set editDetails(value: boolean) {

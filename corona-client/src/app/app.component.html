@@ -34,7 +34,7 @@
         *ngIf="editDetails"
       ></app-add-new-marker>
       <app-marker-details
-        *ngIf="showDetails() && !editDetails"
+        *ngIf="currentItem && !editDetails"
       ></app-marker-details>
     </div>
     <div class="scroll">

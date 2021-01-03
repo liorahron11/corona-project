@@ -1,10 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../../services/markers.service';
-import {
-  EventBusService,
-  Events,
-} from '../../services/event-bus.service';
+import { EventBusService, Events } from '../../services/event-bus.service';
 import { Observable, Subscription } from 'rxjs';
 import { IMapItem } from '../../../map-item';
 

@@ -7,10 +7,7 @@ import {
   MapEventsManagerService,
 } from 'angular-cesium';
 import { Observable, Subscription } from 'rxjs';
-import {
-  EventBusService,
-  Events,
-} from '../../services/event-bus.service';
+import { EventBusService, Events } from '../../services/event-bus.service';
 import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service';
 import { selectAddMode } from '../../store/outbreak-list.selector';

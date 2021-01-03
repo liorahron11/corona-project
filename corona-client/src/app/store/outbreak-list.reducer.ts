@@ -43,16 +43,18 @@ export const outbreakListReducer = createReducer(
   }))
 );
 
-const addItem = (array, item) => {
-  const newArray = [...array];
+const addItem = (array: IMapItem[], item: IMapItem): IMapItem[] => {
+  const newArray: IMapItem[] = [...array];
   newArray.push(item);
 
   return newArray;
 };
 
-const saveItem = (array, item) => {
-  let tempArr = [...array];
-  const index = array.findIndex((arrayItem) => arrayItem.id === item.id);
+const saveItem = (array: IMapItem[], item: IMapItem): IMapItem[] => {
+  let tempArr: IMapItem[] = [...array];
+  const index: number = array.findIndex(
+    (arrayItem: IMapItem) => arrayItem.id === item.id
+  );
 
   if (index > -1) {
     const tempMapItem: IMapItem = {
@@ -66,9 +68,9 @@ const saveItem = (array, item) => {
   return tempArr;
 };
 
-const removeItem = (array, id: string) => {
-  let tempArr = [...array];
-  const index = array.findIndex((item: IMapItem) => item.id === id);
+const removeItem = (array: IMapItem[], id: string): IMapItem[] => {
+  let tempArr: IMapItem[] = [...array];
+  const index: number = array.findIndex((item: IMapItem) => item.id === id);
 
   if (index > -1) {
     const tempMapItem: IMapItem = {
