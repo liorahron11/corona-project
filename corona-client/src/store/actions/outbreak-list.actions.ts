@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { MapItem } from '../../mapItem';
+import { MapItem } from '../../map-item';
 
 export const set = createAction(
   '[OutbreakList] Set',

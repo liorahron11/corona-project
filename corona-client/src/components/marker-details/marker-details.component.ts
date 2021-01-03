@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MapItem } from '../mapItem';
-import { MarkersService } from '../markers.service';
-import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
-import { selectCurrentItem } from '../store/outbreak-list.selector';
+import { MapItem } from '../../map-item';
+import { MarkersService } from '../../services/markers.service/markers.service';
+import { changeCurrentItem } from '../../store/actions/outbreak-list.actions';
+import { selectCurrentItem } from '../../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-marker-details',

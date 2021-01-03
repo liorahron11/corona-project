@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
 import { faShieldVirus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { EmitEvent, EventBusService, Events } from './event-bus.service';
-import { changeAddMode, set } from './store/actions/outbreak-list.actions';
+import {
+  EmitEvent,
+  EventBusService,
+  Events,
+} from '../services/event-bus.service/event-bus.service';
+import { changeAddMode, set } from '../store/actions/outbreak-list.actions';
 import {
   selectAddMode,
   selectCurrentItem,
   selectList,
-} from './store/outbreak-list.selector';
+} from '../store/outbreak-list.selector';
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from './snackbar/snackbar.component';
-import { MapItem } from './mapItem';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { MapItem } from '../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({

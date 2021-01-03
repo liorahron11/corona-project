@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as OutbreakListActions from './actions/outbreak-list.actions';
-import { MapItem } from '../mapItem';
+import { MapItem } from '../map-item';
 import { ActionType } from 'angular-cesium';
 
 export interface State {

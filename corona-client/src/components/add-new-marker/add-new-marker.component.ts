@@ -1,16 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { MarkersService } from '../markers.service';
+import { MarkersService } from '../../services/markers.service/markers.service';
 import {
   changeAddMode,
   changeCurrentItem,
   save,
-} from '../store/actions/outbreak-list.actions';
-import { selectList } from '../store/outbreak-list.selector';
+} from '../../store/actions/outbreak-list.actions';
+import { selectList } from '../../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
-import { MapItem } from '../mapItem';
+import { MapItem } from '../../map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({
