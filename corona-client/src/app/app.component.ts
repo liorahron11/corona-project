@@ -11,7 +11,7 @@ import {
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './snackbar/snackbar.component';
-import { MapItem } from './mapItem';
+import { MapItem } from './map-item';
 import { ActionType } from 'angular-cesium';
 
 @Component({

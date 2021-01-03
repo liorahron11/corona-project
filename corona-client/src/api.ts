@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MapItem } from './app/mapItem';
+import { MapItem } from './app/map-item';
 const API_URL = 'http://localhost:9000';
 
 const api = {

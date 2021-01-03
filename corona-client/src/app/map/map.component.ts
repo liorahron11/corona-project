@@ -3,7 +3,7 @@ import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../markers.service';
 import { EventBusService, Events } from '../event-bus.service';
 import { Subscription } from 'rxjs';
-import { MapItem } from '../mapItem';
+import { MapItem } from '../map-item';
 
 @Component({
   selector: 'app-map',

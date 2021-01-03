@@ -38,7 +38,7 @@ export class MapMarkerComponent implements OnInit {
     const clickEvent = this.eventManager.register(eventRegistration);
 
     this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
-      let addMode: boolean;
+      let addMode;
       this.store
         .select(selectAddMode)
         .subscribe((subscriber) => (addMode = subscriber));
