@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IMapItem } from './map-item';
-const API_URL = 'http://localhost:9000';
+const API_URL: string = 'http://localhost:9000';
 
 const api = {
   MapItems: {
@@ -8,7 +8,7 @@ const api = {
       return axios.get(`${API_URL}/mapItems`);
     },
     GraphQLUpdate: (list) => {
-      let newList = [];
+      let newList: Object[] = [];
       list.forEach((mapItem: IMapItem) => {
         newList.push({
           _id: mapItem.id,
@@ -18,7 +18,7 @@ const api = {
         });
       });
 
-      const query = `mutation query($list: [MapItemInput]) {
+      const query: string = `mutation query($list: [MapItemInput]) {
         clearMarkers {
           _id
         }
