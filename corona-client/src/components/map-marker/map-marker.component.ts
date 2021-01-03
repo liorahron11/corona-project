@@ -7,10 +7,13 @@ import {
   MapEventsManagerService,
 } from 'angular-cesium';
 import { Subscription } from 'rxjs';
-import { EventBusService, Events } from '../event-bus.service';
-import { MapItem } from '../mapItem';
-import { MarkersService } from '../markers.service';
-import { selectAddMode } from '../store/outbreak-list.selector';
+import {
+  EventBusService,
+  Events,
+} from '../../services/event-bus.service/event-bus.service';
+import { MapItem } from '../../map-item';
+import { MarkersService } from '../../services/markers.service/markers.service';
+import { selectAddMode } from '../../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-map-marker',

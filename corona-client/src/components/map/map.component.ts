@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
-import { MarkersService } from '../markers.service';
-import { EventBusService, Events } from '../event-bus.service';
+import { MarkersService } from '../../services/markers.service/markers.service';
+import { EventBusService, Events } from '../../services/event-bus.service/event-bus.service';
 import { Subscription } from 'rxjs';
-import { MapItem } from '../map-item';
+import { MapItem } from '../../map-item';
 
 @Component({
   selector: 'app-map',

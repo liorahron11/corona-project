@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActionType } from 'angular-cesium';
-import { MapItem } from '../map-item';
-import { selectList } from '../store/outbreak-list.selector';
+import { MapItem } from '../../map-item';
+import { selectList } from '../../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-scroller',

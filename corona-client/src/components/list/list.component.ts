@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
-import { EventBusService, EmitEvent, Events } from '../event-bus.service';
-import { MapItem } from '../mapItem';
-import { changeCurrentItem } from '../store/actions/outbreak-list.actions';
-import { selectAddMode, selectList } from '../store/outbreak-list.selector';
+import {
+  EventBusService,
+  EmitEvent,
+  Events,
+} from '../../services/event-bus.service/event-bus.service';
+import { MapItem } from '../../map-item';
+import { changeCurrentItem } from '../../store/actions/outbreak-list.actions';
 
 @Component({
   selector: 'app-list',
