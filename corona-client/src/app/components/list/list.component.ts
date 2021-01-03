@@ -17,13 +17,13 @@ import { changeCurrentItem } from '../../store/outbreak-list.actions';
 })
 export class ListComponent implements OnInit {
   @Input() items: MapItem[] = [];
-  currentItem: string;
+  private currentItem: string;
 
   constructor(private eventbus: EventBusService, private store: Store) {}
 
   ngOnInit(): void {}
 
-  private itemClicked(options: MatListOption[]) {
+  public itemClicked(options: MatListOption[]) {
     this.currentItem = options.map((o) => o.value)[0];
 
     const MapItemClicked: MapItem = this.items.find(

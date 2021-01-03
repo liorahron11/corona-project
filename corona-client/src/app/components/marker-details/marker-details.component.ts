@@ -11,7 +11,7 @@ import { selectCurrentItem } from '../../store/outbreak-list.selector';
   styleUrls: ['./marker-details.component.css'],
 })
 export class MarkerDetailsComponent implements OnInit {
-  currentItem: MapItem;
+  public currentItem: MapItem;
 
   constructor(private store: Store, private markersService: MarkersService) {}
 
@@ -21,12 +21,12 @@ export class MarkerDetailsComponent implements OnInit {
       .subscribe((sub) => (this.currentItem = sub));
   }
 
-  private remove(): void {
+  public remove(): void {
     this.markersService.deleteMapItem(this.currentItem.id);
     this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
   }
 
-  private parsedPosition(): string {
+  public parsedPosition(): string {
     const position = this.currentItem.entity.position;
 
     return ` ${position.x},

@@ -16,8 +16,8 @@ import { MapItem } from '../../../map-item';
 })
 export class MapComponent implements OnInit {
   @Output()
-  openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
-  eventbusSub: Subscription;
+  private openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
+  private eventbusSub: Subscription;
 
   constructor(
     private viewerConf: ViewerConfiguration,
@@ -85,11 +85,11 @@ export class MapComponent implements OnInit {
     return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
   }
 
-  private loadMap(): Observable<MapItem> {
+  public loadMap(): Observable<MapItem> {
     return this.markersService.getUpdatedMap();
   }
 
-  private openEditWindow(): void {
+  public openEditWindow(): void {
     this.openEditWindowEvent.next();
   }
 }

@@ -20,8 +20,8 @@ import { ActionType } from 'angular-cesium';
 })
 export class AddNewMarkerComponent implements OnInit {
   @Output() closeAddWindowEvent = new EventEmitter<string>();
-  name: FormControl = new FormControl('', [Validators.required]);
-  currentItem: MapItem;
+  public name: FormControl = new FormControl('', [Validators.required]);
+  public currentItem: MapItem;
 
   constructor(
     private store: Store,
@@ -37,13 +37,13 @@ export class AddNewMarkerComponent implements OnInit {
       );
   }
 
-  private getErrorMessage(): string {
+  public getErrorMessage(): string {
     if (this.name.hasError('required')) {
       return 'שם לא הוזן';
     }
   }
 
-  private save(): void {
+  public save(): void {
     if (!this.name.hasError('required')) {
       const currentEntity = this.currentItem.entity;
 
@@ -67,7 +67,7 @@ export class AddNewMarkerComponent implements OnInit {
     }
   }
 
-  private cancel(): void {
+  public cancel(): void {
     this.store.dispatch(changeAddMode({ addMode: false }));
     this.markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
