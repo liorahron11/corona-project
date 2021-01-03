@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MapItem } from '../../map-item';
+import { MapItem } from '../../../map-item';
 import { selectList } from '../../store/outbreak-list.selector';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MapItem } from '../../map-item';
+import { MapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service/markers.service';
-import { changeCurrentItem } from '../../store/actions/outbreak-list.actions';
+import { changeCurrentItem } from '../../store/outbreak-list.actions';
 import { selectCurrentItem } from '../../store/outbreak-list.selector';
 
 @Component({
@@ -21,16 +21,16 @@ export class MarkerDetailsComponent implements OnInit {
       .subscribe((sub) => (this.currentItem = sub));
   }
 
-  remove = () => {
+  private remove(): void {
     this.markersService.deleteMapItem(this.currentItem.id);
     this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
-  };
+  }
 
-  parsedPosition = () => {
+  private parsedPosition(): string {
     const position = this.currentItem.entity.position;
 
     return ` ${position.x},
             ${position.y},
             ${position.z}`;
-  };
+  }
 }

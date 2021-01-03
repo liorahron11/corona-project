@@ -6,8 +6,8 @@ import {
   EmitEvent,
   Events,
 } from '../../services/event-bus.service/event-bus.service';
-import { MapItem } from '../../map-item';
-import { changeCurrentItem } from '../../store/actions/outbreak-list.actions';
+import { MapItem } from '../../../map-item';
+import { changeCurrentItem } from '../../store/outbreak-list.actions';
 
 @Component({
   selector: 'app-list',
@@ -23,14 +23,14 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  itemClicked = (options: MatListOption[]) => {
+  private itemClicked(options: MatListOption[]) {
     this.currentItem = options.map((o) => o.value)[0];
 
-    const MapItemClicked = this.items.find(
+    const MapItemClicked: MapItem = this.items.find(
       (mapItem) => mapItem.id === this.currentItem
     );
 
     this.eventbus.emit(new EmitEvent(Events.MarkerSelect, MapItemClicked));
     this.store.dispatch(changeCurrentItem({ currentItem: MapItemClicked }));
-  };
+  }
 }

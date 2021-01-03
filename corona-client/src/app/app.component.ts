@@ -5,16 +5,16 @@ import {
   EmitEvent,
   EventBusService,
   Events,
-} from '../services/event-bus.service/event-bus.service';
-import { changeAddMode, set } from '../store/actions/outbreak-list.actions';
+} from './services/event-bus.service/event-bus.service';
+import { changeAddMode, set } from './store/outbreak-list.actions';
 import {
   selectAddMode,
   selectCurrentItem,
   selectList,
-} from '../store/outbreak-list.selector';
+} from './store/outbreak-list.selector';
 import api from '../api';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { MapItem } from '../map-item';
 import { ActionType } from 'angular-cesium';
 
@@ -27,6 +27,7 @@ export class AppComponent {
   virusIcon = faShieldVirus;
   plusIcon = faPlus;
   editDetails: boolean = false;
+  addMode: boolean;
 
   constructor(
     private store: Store,
@@ -44,41 +45,38 @@ export class AppComponent {
       });
   }
 
-  ngOnInit() {}
-
-  toggleAddMode = () => {
-    let addMode;
-
+  ngOnInit() {
     this.store
       .select(selectAddMode)
-      .subscribe((subscriber) => (addMode = subscriber));
+      .subscribe((subscriber) => (this.addMode = subscriber));
+  }
 
-    this.store.dispatch(changeAddMode({ addMode: !addMode }));
-
+  private toggleAddMode(): void {
+    this.store.dispatch(changeAddMode({ addMode: !this.addMode }));
     this.eventbus.emit(new EmitEvent(Events.ToggleAddMode));
-  };
+  }
 
-  turnOffAddMode = () => {
+  private turnOffAddMode(): void {
     this.editDetails = false;
     this.store.dispatch(changeAddMode({ addMode: this.editDetails }));
-  };
+  }
 
-  turnOnEditMode = () => {
+  private turnOnEditMode(): void {
     this.editDetails = true;
-  };
+  }
 
-  showDetails = () => {
-    let currentItem;
+  private showDetails(): MapItem {
+    let currentItem: MapItem;
 
     this.store
       .select(selectCurrentItem)
       .subscribe((sub) => (currentItem = sub));
 
     return currentItem;
-  };
+  }
 
-  update = () => {
-    let list = [];
+  private update(): void {
+    let list: MapItem[] = [];
 
     this.store
       .select(selectList)
@@ -98,12 +96,12 @@ export class AppComponent {
         console.log(error);
         this.showSnackbar('שגיאה', 'סגור');
       });
-  };
+  }
 
-  showSnackbar = (message, action) => {
+  private showSnackbar(message, action): void {
     this.snackbar.openFromComponent(SnackbarComponent, {
       duration: 3000,
       data: { message: message, action: action },
     });
-  };
+  }
 }

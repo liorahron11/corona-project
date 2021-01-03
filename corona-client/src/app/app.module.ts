@@ -10,14 +10,14 @@ import {
   AngularCesiumWidgetsModule,
   CesiumService,
 } from 'angular-cesium';
-import { MapComponent } from '../components/map/map.component';
+import { MapComponent } from './components/map/map.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HeaderComponent } from '../components/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ScrollerComponent } from '../components/scroller/scroller.component';
+import { ScrollerComponent } from './components/scroller/scroller.component';
 import { MatListModule } from '@angular/material/list';
-import { ListComponent } from '../components/list/list.component';
+import { ListComponent } from './components/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
@@ -27,17 +27,17 @@ import en from '@angular/common/locales/en';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { StoreModule } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
-import { MapMarkerComponent } from '../components/map-marker/map-marker.component';
+import { MapMarkerComponent } from './components/map-marker/map-marker.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import * as fromOutbreakList from '../store/outbreak-list.reducer';
+import * as fromOutbreakList from './store/outbreak-list.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AddNewMarkerComponent } from '../components/add-new-marker/add-new-marker.component';
+import { AddNewMarkerComponent } from './components/add-new-marker/add-new-marker.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../components/snackbar/snackbar.component';
-import { MarkerDetailsComponent } from '../components/marker-details/marker-details.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { MarkerDetailsComponent } from './components/marker-details/marker-details.component';
 
 registerLocaleData(en);
 
