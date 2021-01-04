@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../../services/markers.service';
 import { EventBusService, Events } from '../../services/event-bus.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IMapItem } from '../../../map-item';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +15,6 @@ import { IMapItem } from '../../../map-item';
 export class MapComponent implements OnInit {
   @Output()
   public openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
-  private _eventbusSub: Subscription;
 
   constructor(
     private viewerConf: ViewerConfiguration,
@@ -36,18 +36,15 @@ export class MapComponent implements OnInit {
       sceneModePicker: false,
     };
 
-    const west: Number = 31.5;
-    const east: Number = 38.5;
-    const south: Number = 29.0;
-    const north: Number = 34.0;
+    const { west, south, east, north } = environment.initialMapLocation;
     const israelLocation = Cesium.Rectangle.fromDegrees(
       west,
       south,
       east,
       north
     );
-    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.025;
     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = israelLocation;
+    Cesium.Camera.DEFAULT_VIEW_FACTOR = environment.defaultViewFactor;
 
     this.viewerConf.viewerModifier = (viewer: any) => {
       viewer._cesiumWidget._creditContainer.style.display = 'none';
@@ -60,14 +57,11 @@ export class MapComponent implements OnInit {
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
       );
 
-      this.eventbusSub = this.eventbus.on(
-        Events.MarkerSelect,
-        (mapItem: IMapItem) => {
-          viewer.camera.flyTo({
-            destination: this.getFlyPosition(mapItem.entity.position),
-          });
-        }
-      );
+      this.eventbus.on(Events.MarkerSelect, (mapItem: IMapItem) => {
+        viewer.camera.flyTo({
+          destination: this.getFlyPosition(mapItem.entity.position),
+        });
+      });
     };
   }
 
@@ -77,9 +71,12 @@ export class MapComponent implements OnInit {
     const cartographic = Cesium.Cartographic.fromCartesian(position);
     const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(10);
     const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(10);
-    const DEFAULT_ALTITUDE = 50000;
 
-    return Cesium.Cartesian3.fromDegrees(longitude, latitude, DEFAULT_ALTITUDE);
+    return Cesium.Cartesian3.fromDegrees(
+      longitude,
+      latitude,
+      environment.defaultFlyAltitude
+    );
   }
 
   public loadMap(): Observable<IMapItem> {
@@ -88,13 +85,5 @@ export class MapComponent implements OnInit {
 
   public openEditWindow(): void {
     this.openEditWindowEvent.next();
-  }
-
-  get eventbusSub(): Subscription {
-    return this._eventbusSub;
-  }
-
-  set eventbusSub(value: Subscription) {
-    this._eventbusSub = value;
   }
 }
