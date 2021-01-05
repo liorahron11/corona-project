@@ -51,17 +51,17 @@ export class AppComponent {
   ngOnInit() {
     this._store
       .select(selectAddMode)
-      .subscribe((subscriber) => (this.addMode = subscriber));
+      .subscribe((storeAddMode) => (this.addMode = storeAddMode));
 
     this._store
       .select(selectCurrentItem)
-      .subscribe((sub) => (this.currentItem = sub));
+      .subscribe((storeCurrentItem) => (this.currentItem = storeCurrentItem));
 
     this._store
       .select(selectMapItemsList)
       .subscribe(
-        (subscriber) =>
-          (this.mapItemsList = subscriber.filter(
+        (storeMapItemsList) =>
+          (this.mapItemsList = storeMapItemsList.filter(
             (mapItem: IMapItem) => mapItem.actionType === ActionType.ADD_UPDATE
           ))
       );

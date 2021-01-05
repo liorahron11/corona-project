@@ -19,7 +19,7 @@ export class MarkerDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._store
       .select(selectCurrentItem)
-      .subscribe((sub) => (this.currentItem = sub));
+      .subscribe((storeCurrentItem) => (this.currentItem = storeCurrentItem));
   }
 
   public remove(): void {

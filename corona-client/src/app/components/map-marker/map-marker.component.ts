@@ -82,7 +82,7 @@ export class MapMarkerComponent implements OnInit {
   ngOnInit(): void {
     this._store
       .select(selectAddMode)
-      .subscribe((subscriber) => (this._addMode = subscriber));
+      .subscribe((storeAddMode) => (this._addMode = storeAddMode));
   }
 
   private openEdit(): void {

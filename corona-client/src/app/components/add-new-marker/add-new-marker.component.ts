@@ -33,7 +33,8 @@ export class AddNewMarkerComponent implements OnInit {
     this._store
       .select(selectMapItemsList)
       .subscribe(
-        (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
+        (storeMapItemsList) =>
+          (this.currentItem = storeMapItemsList[storeMapItemsList.length - 1])
       );
   }
 

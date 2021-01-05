@@ -12,8 +12,10 @@ export class ScrollerComponent implements OnInit {
   private _items: IMapItem[] = [];
 
   constructor(private _store: Store) {
-    this._store.select(selectMapItemsList).subscribe((subscriber) => {
-      this.items = subscriber.filter((mapItem: IMapItem) => mapItem.saved);
+    this._store.select(selectMapItemsList).subscribe((storeMapItemsList) => {
+      this.items = storeMapItemsList.filter(
+        (mapItem: IMapItem) => mapItem.saved
+      );
     });
   }
 
