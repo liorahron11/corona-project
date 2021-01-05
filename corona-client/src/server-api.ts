@@ -8,9 +8,9 @@ const api = {
     GetAll: () => {
       return axios.get(`${API_URL}/mapItems`);
     },
-    GraphQLUpdate: (list) => {
+    GraphQLUpdate: (mapItemsList) => {
       let newList: Object[] = [];
-      list.forEach((mapItem: IMapItem) => {
+      mapItemsList.forEach((mapItem: IMapItem) => {
         newList.push({
           _id: mapItem.id,
           entity: mapItem.entity,

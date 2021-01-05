@@ -6,9 +6,9 @@ export const selectState = createSelector(
   (state) => state
 );
 
-export const selectList = createSelector(
+export const selectMapItemsList = createSelector(
   (state: { storeState: State }) => state.storeState,
-  (state) => state.list
+  (state) => state.mapItemsList
 );
 
 export const selectCurrentItem = createSelector(

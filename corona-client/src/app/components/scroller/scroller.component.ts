@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IMapItem } from '../../../map-item';
-import { selectList } from '../../store/outbreak-list.selector';
+import { selectMapItemsList } from '../../store/outbreak-list.selector';
 
 @Component({
   selector: 'app-scroller',
@@ -12,7 +12,7 @@ export class ScrollerComponent implements OnInit {
   private _items: IMapItem[] = [];
 
   constructor(private _store: Store) {
-    this._store.select(selectList).subscribe((subscriber) => {
+    this._store.select(selectMapItemsList).subscribe((subscriber) => {
       this.items = subscriber.filter((mapItem: IMapItem) => mapItem.saved);
     });
   }

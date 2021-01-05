@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { mergeAll } from 'rxjs/operators';
 import { IMapItem } from '../../map-item';
 import { add, remove } from '../store/outbreak-list.actions';
-import { selectList } from '../store/outbreak-list.selector';
+import { selectMapItemsList } from '../store/outbreak-list.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +32,6 @@ export class MarkersService {
   }
 
   public getUpdatedMap(): Observable<IMapItem> {
-    return this._store.select(selectList).pipe(mergeAll());
+    return this._store.select(selectMapItemsList).pipe(mergeAll());
   }
 }

@@ -7,7 +7,7 @@ import {
   changeCurrentItem,
   save,
 } from '../../store/outbreak-list.actions';
-import { selectList } from '../../store/outbreak-list.selector';
+import { selectMapItemsList } from '../../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { IMapItem } from '../../../map-item';
@@ -31,7 +31,7 @@ export class AddNewMarkerComponent implements OnInit {
 
   ngOnInit(): void {
     this._store
-      .select(selectList)
+      .select(selectMapItemsList)
       .subscribe(
         (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
       );

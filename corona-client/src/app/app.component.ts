@@ -12,7 +12,7 @@ import { changeAddMode, set } from './store/outbreak-list.actions';
 import {
   selectAddMode,
   selectCurrentItem,
-  selectList,
+  selectMapItemsList,
 } from './store/outbreak-list.selector';
 import api from '../server-api';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,7 +40,7 @@ export class AppComponent {
   ) {
     api.MapItems.GetAll()
       .then((res) => {
-        this._store.dispatch(set({ list: res.data }));
+        this._store.dispatch(set({ mapItemsList: res.data }));
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +58,7 @@ export class AppComponent {
       .subscribe((sub) => (this.currentItem = sub));
 
     this._store
-      .select(selectList)
+      .select(selectMapItemsList)
       .subscribe(
         (subscriber) =>
           (this.mapItemsList = subscriber.filter(
