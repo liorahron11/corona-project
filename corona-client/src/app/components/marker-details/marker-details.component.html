@@ -1,0 +1,8 @@
+<div class="container">
+  <p><strong>שם:</strong> {{ currentItem.entity.name }}</p>
+  <p class="position"><strong>מיקום:</strong>{{ parsedPosition() }}</p>
+
+  <div class="buttonsFlex">
+    <button mat-raised-button color="primary" (click)="remove()">מחק</button>
+  </div>
+</div>
