@@ -53,10 +53,24 @@ function getAll() {
 }
 exports.getAll = getAll;
 function addList(mapItemsList) {
-    return MapItemModel_1.default.insertMany(mapItemsList);
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, MapItemModel_1.default.insertMany(mapItemsList)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
 }
 exports.addList = addList;
 function clean() {
-    return MapItemModel_1.default.deleteMany({});
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, MapItemModel_1.default.deleteMany({})];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
 }
 exports.clean = clean;
