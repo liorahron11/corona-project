@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActionType } from 'angular-cesium';
+import { ActionType, Cartesian3 } from 'angular-cesium';
 import { Observable } from 'rxjs';
 import { mergeAll } from 'rxjs/operators';
 import { IMapItem } from '../../map-item';
@@ -13,7 +13,7 @@ import { selectList } from '../store/outbreak-list.selector';
 export class MarkersService {
   constructor(private _store: Store) {}
 
-  public addMapItem(id: string, name: string, position: object): void {
+  public addMapItem(id: string, name: string, position: Cartesian3): void {
     const mapItemToAdd: IMapItem = {
       id,
       entity: {

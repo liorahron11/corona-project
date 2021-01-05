@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Cartesian3 } from 'angular-cesium';
 import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
@@ -27,11 +28,9 @@ export class MarkerDetailsComponent implements OnInit {
   }
 
   public parsedPosition(): string {
-    const position = this.currentItem.entity.position;
+    const { x, y, z } = this.currentItem.entity.position;
 
-    return ` ${position.x},
-            ${position.y},
-            ${position.z}`;
+    return new Cesium.Cartesian3(x, y, z).toString();
   }
 
   get currentItem(): IMapItem {

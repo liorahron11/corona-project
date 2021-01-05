@@ -65,7 +65,7 @@ export class MapMarkerComponent implements OnInit {
           this._markersService.addMapItem(
             longitude + latitude,
             longitude.substring(1, 5) + latitude.substring(1, 6),
-            Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
+            new Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
           );
 
           this.openEdit();
