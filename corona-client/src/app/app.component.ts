@@ -14,7 +14,7 @@ import {
   selectCurrentItem,
   selectList,
 } from './store/outbreak-list.selector';
-import api from '../api';
+import api from '../server-api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { IMapItem } from '../map-item';
