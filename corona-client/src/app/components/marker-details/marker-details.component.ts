@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Cartesian3 } from 'angular-cesium';
 import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
@@ -13,25 +14,23 @@ import { selectCurrentItem } from '../../store/outbreak-list.selector';
 export class MarkerDetailsComponent implements OnInit {
   private _currentItem: IMapItem;
 
-  constructor(private store: Store, private markersService: MarkersService) {}
+  constructor(private _store: Store, private _markersService: MarkersService) {}
 
   ngOnInit(): void {
-    this.store
+    this._store
       .select(selectCurrentItem)
-      .subscribe((sub) => (this.currentItem = sub));
+      .subscribe((storeCurrentItem) => (this.currentItem = storeCurrentItem));
   }
 
   public remove(): void {
-    this.markersService.deleteMapItem(this.currentItem.id);
-    this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
+    this._markersService.deleteMapItem(this.currentItem.id);
+    this._store.dispatch(changeCurrentItem({ currentItem: undefined }));
   }
 
   public parsedPosition(): string {
-    const position = this.currentItem.entity.position;
+    const { x, y, z } = this.currentItem.entity.position;
 
-    return ` ${position.x},
-            ${position.y},
-            ${position.z}`;
+    return new Cesium.Cartesian3(x, y, z).toString();
   }
 
   get currentItem(): IMapItem {

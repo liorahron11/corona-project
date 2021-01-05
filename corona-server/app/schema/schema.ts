@@ -71,7 +71,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     Markers: {
       type: new GraphQLList(MapItemType),
-      resolve(parent, args) {
+      resolve() {
         return getAll();
       },
     },
@@ -83,7 +83,7 @@ const Mutation = new GraphQLObjectType({
   fields: {
     clearMarkers: {
       type: MapItemType,
-      resolve(parent) {
+      resolve() {
         return clean();
       },
     },
@@ -92,14 +92,14 @@ const Mutation = new GraphQLObjectType({
       args: {
         list: { type: new GraphQLList(MapItemInput) },
       },
-      resolve: (parent, args) => {
+      resolve: (parent: any, args: any) => {
         return addList(args.list);
       },
     },
   },
 });
 
-module.exports = new GraphQLSchema({
+export default new GraphQLSchema({
   query: RootQuery,
   mutation: Mutation,
 });

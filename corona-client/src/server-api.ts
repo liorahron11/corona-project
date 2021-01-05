@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { IMapItem } from './map-item';
-const API_URL: string = 'http://localhost:9000';
+import { environment } from './environments/environment';
+const API_URL: string = environment.apiURL;
 
 const api = {
   MapItems: {
     GetAll: () => {
       return axios.get(`${API_URL}/mapItems`);
     },
-    GraphQLUpdate: (list) => {
+    GraphQLUpdate: (mapItemsList) => {
       let newList: Object[] = [];
-      list.forEach((mapItem: IMapItem) => {
+      mapItemsList.forEach((mapItem: IMapItem) => {
         newList.push({
           _id: mapItem.id,
           entity: mapItem.entity,

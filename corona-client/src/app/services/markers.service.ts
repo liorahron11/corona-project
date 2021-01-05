@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActionType } from 'angular-cesium';
+import { ActionType, Cartesian3 } from 'angular-cesium';
 import { Observable } from 'rxjs';
 import { mergeAll } from 'rxjs/operators';
 import { IMapItem } from '../../map-item';
 import { add, remove } from '../store/outbreak-list.actions';
-import { selectList } from '../store/outbreak-list.selector';
+import { selectMapItemsList } from '../store/outbreak-list.selector';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarkersService {
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
-  public addMapItem(id: string, name: string, position: object): void {
+  public addMapItem(id: string, name: string, position: Cartesian3): void {
     const mapItemToAdd: IMapItem = {
       id,
       entity: {
@@ -24,14 +24,14 @@ export class MarkersService {
       saved: false,
     };
 
-    this.store.dispatch(add({ item: mapItemToAdd }));
+    this._store.dispatch(add({ item: mapItemToAdd }));
   }
 
   public deleteMapItem(id: string): void {
-    this.store.dispatch(remove({ id: id }));
+    this._store.dispatch(remove({ id: id }));
   }
 
   public getUpdatedMap(): Observable<IMapItem> {
-    return this.store.select(selectList).pipe(mergeAll());
+    return this._store.select(selectMapItemsList).pipe(mergeAll());
   }
 }

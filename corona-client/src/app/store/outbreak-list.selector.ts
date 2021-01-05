@@ -1,14 +1,9 @@
 import { createSelector } from '@ngrx/store';
 import { State } from './outbreak-list.reducer';
 
-export const selectState = createSelector(
+export const selectMapItemsList = createSelector(
   (state: { storeState: State }) => state.storeState,
-  (state) => state
-);
-
-export const selectList = createSelector(
-  (state: { storeState: State }) => state.storeState,
-  (state) => state.list
+  (state) => state.mapItemsList
 );
 
 export const selectCurrentItem = createSelector(

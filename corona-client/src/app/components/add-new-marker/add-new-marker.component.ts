@@ -7,7 +7,7 @@ import {
   changeCurrentItem,
   save,
 } from '../../store/outbreak-list.actions';
-import { selectList } from '../../store/outbreak-list.selector';
+import { selectMapItemsList } from '../../store/outbreak-list.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { IMapItem } from '../../../map-item';
@@ -24,16 +24,17 @@ export class AddNewMarkerComponent implements OnInit {
   private _currentItem: IMapItem;
 
   constructor(
-    private store: Store,
-    private markersService: MarkersService,
-    private snackbar: MatSnackBar
+    private _store: Store,
+    private _markersService: MarkersService,
+    private _snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.store
-      .select(selectList)
+    this._store
+      .select(selectMapItemsList)
       .subscribe(
-        (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
+        (storeMapItemsList) =>
+          (this.currentItem = storeMapItemsList[storeMapItemsList.length - 1])
       );
   }
 
@@ -57,10 +58,10 @@ export class AddNewMarkerComponent implements OnInit {
         saved: true,
       };
 
-      this.store.dispatch(save({ item: newMapItem }));
-      this.store.dispatch(changeCurrentItem({ currentItem: newMapItem }));
+      this._store.dispatch(save({ item: newMapItem }));
+      this._store.dispatch(changeCurrentItem({ currentItem: newMapItem }));
       this.closeWindow();
-      this.snackbar.openFromComponent(SnackbarComponent, {
+      this._snackbar.openFromComponent(SnackbarComponent, {
         duration: 3000,
         data: { message: 'מיקום נוסף בהצלחה', action: 'סגור' },
       });
@@ -68,8 +69,8 @@ export class AddNewMarkerComponent implements OnInit {
   }
 
   public cancel(): void {
-    this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMapItem(this.currentItem.id);
+    this._store.dispatch(changeAddMode({ addMode: false }));
+    this._markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
   }
 

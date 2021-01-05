@@ -8,5 +8,6 @@ export const environment = {
   },
   defaultViewFactor: 0.025,
   defaultFlyAltitude: 50000,
-  mapMarkerURL: 'http://localhost:9000/assets/map-marker',
+  mapMarkerURL: 'http://localhost:4200/assets/map-marker.png',
+  apiURL: 'http://localhost:9000',
 };

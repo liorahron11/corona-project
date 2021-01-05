@@ -3,7 +3,7 @@ import { IMapItem } from '../../map-item';
 
 export const set = createAction(
   '[OutbreakList] Set',
-  props<{ list: IMapItem[] }>()
+  props<{ mapItemsList: IMapItem[] }>()
 );
 
 export const add = createAction(

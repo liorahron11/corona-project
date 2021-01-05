@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatListOption } from '@angular/material/list';
 import { Store } from '@ngrx/store';
-import {
-  EventBusService,
-  EmitEvent,
-  Events,
-} from '../../services/event-bus.service';
+import { EventBusService } from '../../services/event-bus.service';
+import { EmitEvent } from '../../../emit-event';
+import { Events } from '../../../events';
 import { IMapItem } from '../../../map-item';
 import { changeCurrentItem } from '../../store/outbreak-list.actions';
 
@@ -19,7 +17,7 @@ export class ListComponent implements OnInit {
   @Input() public items: IMapItem[] = [];
   private _currentItem: string;
 
-  constructor(private eventbus: EventBusService, private store: Store) {}
+  constructor(private _eventbus: EventBusService, private _store: Store) {}
 
   ngOnInit(): void {}
 
@@ -30,8 +28,8 @@ export class ListComponent implements OnInit {
       (IMapItem) => IMapItem.id === this.currentItem
     );
 
-    this.eventbus.emit(new EmitEvent(Events.MarkerSelect, mapItemClicked));
-    this.store.dispatch(changeCurrentItem({ currentItem: mapItemClicked }));
+    this._eventbus.emit(new EmitEvent(Events.MARKER_SELECT, mapItemClicked));
+    this._store.dispatch(changeCurrentItem({ currentItem: mapItemClicked }));
   }
 
   get currentItem(): string {

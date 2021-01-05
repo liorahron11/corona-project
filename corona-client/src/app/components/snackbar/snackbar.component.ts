@@ -8,13 +8,13 @@ import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 })
 export class SnackbarComponent implements OnInit {
   constructor(
-    private snackbar: MatSnackBar,
+    private _snackbar: MatSnackBar,
     @Inject(MAT_SNACK_BAR_DATA) public data: any
   ) {}
 
   ngOnInit(): void {}
 
   public close() {
-    this.snackbar.dismiss();
+    this._snackbar.dismiss();
   }
 }

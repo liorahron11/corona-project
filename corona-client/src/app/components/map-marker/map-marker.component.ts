@@ -6,8 +6,9 @@ import {
   EventRegistrationInput,
   MapEventsManagerService,
 } from 'angular-cesium';
-import { Observable, Subscription } from 'rxjs';
-import { EventBusService, Events } from '../../services/event-bus.service';
+import { Observable } from 'rxjs';
+import { EventBusService } from '../../services/event-bus.service';
+import { Events } from '../../../events';
 import { IMapItem } from '../../../map-item';
 import { MarkersService } from '../../services/markers.service';
 import { selectAddMode } from '../../store/outbreak-list.selector';
@@ -23,24 +24,23 @@ export class MapMarkerComponent implements OnInit {
   public openEditWindow: EventEmitter<string> = new EventEmitter<string>();
   @Input() public entities: Observable<IMapItem>;
   private _MAP_MARKER_URL: string = environment.mapMarkerURL;
-  private _eventbusSub: Subscription;
   private _addMode: boolean;
 
   constructor(
-    private eventManager: MapEventsManagerService,
-    private eventbus: EventBusService,
-    private store: Store,
-    private cesiumService: CesiumService,
-    private markersService: MarkersService
+    private _eventManager: MapEventsManagerService,
+    private _eventbus: EventBusService,
+    private _store: Store,
+    private _cesiumService: CesiumService,
+    private _markersService: MarkersService
   ) {
-    const viewer = this.cesiumService.getViewer();
+    const viewer = this._cesiumService.getViewer();
     const eventRegistration: EventRegistrationInput = {
       event: CesiumEvent.LEFT_CLICK,
     };
 
-    const clickEvent = this.eventManager.register(eventRegistration);
+    const clickEvent = this._eventManager.register(eventRegistration);
 
-    this.eventbusSub = this.eventbus.on(Events.ToggleAddMode, () => {
+    this._eventbus.on(Events.TOGGLE_ADD_MODE, () => {
       if (this.addMode) {
         this.setCrosshairPointer(viewer);
 
@@ -62,10 +62,10 @@ export class MapMarkerComponent implements OnInit {
             cartographic.height
           ).toFixed(15);
 
-          this.markersService.addMapItem(
+          this._markersService.addMapItem(
             longitude + latitude,
             longitude.substring(1, 5) + latitude.substring(1, 6),
-            Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
+            new Cesium.Cartesian3.fromDegrees(longitude, latitude, height)
           );
 
           this.openEdit();
@@ -80,9 +80,9 @@ export class MapMarkerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store
+    this._store
       .select(selectAddMode)
-      .subscribe((subscriber) => (this._addMode = subscriber));
+      .subscribe((storeAddMode) => (this._addMode = storeAddMode));
   }
 
   private openEdit(): void {
@@ -107,9 +107,5 @@ export class MapMarkerComponent implements OnInit {
 
   set addMode(value: boolean) {
     this._addMode = value;
-  }
-
-  set eventbusSub(value: Subscription) {
-    this._eventbusSub = value;
   }
 }

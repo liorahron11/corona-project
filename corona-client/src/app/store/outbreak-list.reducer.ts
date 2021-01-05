@@ -4,30 +4,30 @@ import { IMapItem } from '../../map-item';
 import { ActionType } from 'angular-cesium';
 
 export interface State {
-  list: IMapItem[];
+  mapItemsList: IMapItem[];
   addMode: boolean;
   currentItem: IMapItem | undefined;
 }
 
 const initialState: State = {
-  list: [],
+  mapItemsList: [],
   addMode: false,
   currentItem: undefined,
 };
 
 export const outbreakListReducer = createReducer(
   initialState,
-  on(OutbreakListActions.set, (state, { list }) => ({
+  on(OutbreakListActions.set, (state, { mapItemsList }) => ({
     ...state,
-    list,
+    mapItemsList,
   })),
   on(OutbreakListActions.add, (state, { item }) => ({
     ...state,
-    list: addItem(state.list, item),
+    mapItemsList: addItem(state.mapItemsList, item),
   })),
   on(OutbreakListActions.remove, (state, { id }) => ({
     ...state,
-    list: removeItem(state.list, id),
+    mapItemsList: removeItem(state.mapItemsList, id),
   })),
   on(OutbreakListActions.changeAddMode, (state, { addMode }) => ({
     ...state,
@@ -39,7 +39,7 @@ export const outbreakListReducer = createReducer(
   })),
   on(OutbreakListActions.save, (state, { item }) => ({
     ...state,
-    list: saveItem(state.list, item),
+    mapItemsList: saveItem(state.mapItemsList, item),
   }))
 );
 
