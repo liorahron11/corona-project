@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { IMapItem } from './map-item';
-const API_URL: string = 'http://localhost:9000';
+import { environment } from './environments/environment';
+const API_URL: string = environment.apiURL;
 
 const api = {
   MapItems: {

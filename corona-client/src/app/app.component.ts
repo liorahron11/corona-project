@@ -5,11 +5,9 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import {
-  EmitEvent,
-  EventBusService,
-  Events,
-} from './services/event-bus.service';
+import { EventBusService } from './services/event-bus.service';
+import { EmitEvent } from '../emit-event';
+import { Events } from '../events';
 import { changeAddMode, set } from './store/outbreak-list.actions';
 import {
   selectAddMode,
@@ -36,13 +34,13 @@ export class AppComponent {
   private _mapItemsList: IMapItem[];
 
   constructor(
-    private store: Store,
-    private eventbus: EventBusService,
-    private snackbar: MatSnackBar
+    private _store: Store,
+    private _eventbus: EventBusService,
+    private _snackbar: MatSnackBar
   ) {
     api.MapItems.GetAll()
       .then((res) => {
-        this.store.dispatch(set({ list: res.data }));
+        this._store.dispatch(set({ list: res.data }));
       })
       .catch((error) => {
         console.log(error);
@@ -51,15 +49,15 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.store
+    this._store
       .select(selectAddMode)
       .subscribe((subscriber) => (this.addMode = subscriber));
 
-    this.store
+    this._store
       .select(selectCurrentItem)
       .subscribe((sub) => (this.currentItem = sub));
 
-    this.store
+    this._store
       .select(selectList)
       .subscribe(
         (subscriber) =>
@@ -70,13 +68,13 @@ export class AppComponent {
   }
 
   public toggleAddMode(): void {
-    this.store.dispatch(changeAddMode({ addMode: !this.addMode }));
-    this.eventbus.emit(new EmitEvent(Events.ToggleAddMode));
+    this._store.dispatch(changeAddMode({ addMode: !this.addMode }));
+    this._eventbus.emit(new EmitEvent(Events.TOGGLE_ADD_MODE));
   }
 
   public turnOffAddMode(): void {
     this.editDetails = false;
-    this.store.dispatch(changeAddMode({ addMode: this.editDetails }));
+    this._store.dispatch(changeAddMode({ addMode: this.editDetails }));
   }
 
   public turnOnEditMode(): void {
@@ -95,7 +93,7 @@ export class AppComponent {
   }
 
   private showSnackbar(message, action): void {
-    this.snackbar.openFromComponent(SnackbarComponent, {
+    this._snackbar.openFromComponent(SnackbarComponent, {
       duration: 3000,
       data: { message: message, action: action },
     });

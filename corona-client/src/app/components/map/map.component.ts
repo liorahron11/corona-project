@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CameraService, ViewerConfiguration } from 'angular-cesium';
 import { MarkersService } from '../../services/markers.service';
-import { EventBusService, Events } from '../../services/event-bus.service';
+import { EventBusService } from '../../services/event-bus.service';
+import { Events } from '../../../events';
 import { Observable } from 'rxjs';
 import { IMapItem } from '../../../map-item';
 import { environment } from '../../../environments/environment';
@@ -17,11 +18,11 @@ export class MapComponent implements OnInit {
   public openEditWindowEvent: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private viewerConf: ViewerConfiguration,
-    private eventbus: EventBusService,
-    private markersService: MarkersService
+    private _viewerConf: ViewerConfiguration,
+    private _eventbus: EventBusService,
+    private _markersService: MarkersService
   ) {
-    this.viewerConf.viewerOptions = {
+    this._viewerConf.viewerOptions = {
       selectionIndicator: false,
       timeline: false,
       infoBox: false,
@@ -46,7 +47,7 @@ export class MapComponent implements OnInit {
     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = israelLocation;
     Cesium.Camera.DEFAULT_VIEW_FACTOR = environment.defaultViewFactor;
 
-    this.viewerConf.viewerModifier = (viewer: any) => {
+    this._viewerConf.viewerModifier = (viewer: any) => {
       viewer._cesiumWidget._creditContainer.style.display = 'none';
 
       viewer.imageryLayers.addImageryProvider(
@@ -57,7 +58,7 @@ export class MapComponent implements OnInit {
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
       );
 
-      this.eventbus.on(Events.MarkerSelect, (mapItem: IMapItem) => {
+      this._eventbus.on(Events.MARKER_SELECT, (mapItem: IMapItem) => {
         viewer.camera.flyTo({
           destination: this.getFlyPosition(mapItem.entity.position),
         });
@@ -80,7 +81,7 @@ export class MapComponent implements OnInit {
   }
 
   public loadMap(): Observable<IMapItem> {
-    return this.markersService.getUpdatedMap();
+    return this._markersService.getUpdatedMap();
   }
 
   public openEditWindow(): void {

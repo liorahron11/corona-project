@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-
+import { Events } from '../../events';
+import { EmitEvent } from '../../emit-event';
 @Injectable({
   providedIn: 'root',
 })
 export class EventBusService {
-  private eventsSubject$ = new Subject<EmitEvent>();
+  private _eventsSubject$ = new Subject<EmitEvent>();
 
   on(event: Events, action: any): Subscription {
-    return this.eventsSubject$
+    return this._eventsSubject$
       .pipe(
         filter((e: EmitEvent) => {
           return e.name === event;
@@ -22,16 +23,6 @@ export class EventBusService {
   }
 
   emit(event: EmitEvent) {
-    this.eventsSubject$.next(event);
+    this._eventsSubject$.next(event);
   }
-}
-
-export class EmitEvent {
-  constructor(public name: any, public value?: any) {}
-}
-
-export enum Events {
-  MarkerSelect,
-  ToggleAddMode,
-  UpdateMap,
 }

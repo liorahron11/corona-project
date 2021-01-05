@@ -11,8 +11,8 @@ import { selectList } from '../../store/outbreak-list.selector';
 export class ScrollerComponent implements OnInit {
   private _items: IMapItem[] = [];
 
-  constructor(private store: Store) {
-    this.store.select(selectList).subscribe((subscriber) => {
+  constructor(private _store: Store) {
+    this._store.select(selectList).subscribe((subscriber) => {
       this.items = subscriber.filter((mapItem: IMapItem) => mapItem.saved);
     });
   }

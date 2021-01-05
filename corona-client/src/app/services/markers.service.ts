@@ -11,7 +11,7 @@ import { selectList } from '../store/outbreak-list.selector';
   providedIn: 'root',
 })
 export class MarkersService {
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
   public addMapItem(id: string, name: string, position: object): void {
     const mapItemToAdd: IMapItem = {
@@ -24,14 +24,14 @@ export class MarkersService {
       saved: false,
     };
 
-    this.store.dispatch(add({ item: mapItemToAdd }));
+    this._store.dispatch(add({ item: mapItemToAdd }));
   }
 
   public deleteMapItem(id: string): void {
-    this.store.dispatch(remove({ id: id }));
+    this._store.dispatch(remove({ id: id }));
   }
 
   public getUpdatedMap(): Observable<IMapItem> {
-    return this.store.select(selectList).pipe(mergeAll());
+    return this._store.select(selectList).pipe(mergeAll());
   }
 }

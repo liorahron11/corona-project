@@ -13,17 +13,17 @@ import { selectCurrentItem } from '../../store/outbreak-list.selector';
 export class MarkerDetailsComponent implements OnInit {
   private _currentItem: IMapItem;
 
-  constructor(private store: Store, private markersService: MarkersService) {}
+  constructor(private _store: Store, private _markersService: MarkersService) {}
 
   ngOnInit(): void {
-    this.store
+    this._store
       .select(selectCurrentItem)
       .subscribe((sub) => (this.currentItem = sub));
   }
 
   public remove(): void {
-    this.markersService.deleteMapItem(this.currentItem.id);
-    this.store.dispatch(changeCurrentItem({ currentItem: undefined }));
+    this._markersService.deleteMapItem(this.currentItem.id);
+    this._store.dispatch(changeCurrentItem({ currentItem: undefined }));
   }
 
   public parsedPosition(): string {

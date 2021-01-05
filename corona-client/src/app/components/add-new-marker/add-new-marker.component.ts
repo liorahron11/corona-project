@@ -24,13 +24,13 @@ export class AddNewMarkerComponent implements OnInit {
   private _currentItem: IMapItem;
 
   constructor(
-    private store: Store,
-    private markersService: MarkersService,
-    private snackbar: MatSnackBar
+    private _store: Store,
+    private _markersService: MarkersService,
+    private _snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.store
+    this._store
       .select(selectList)
       .subscribe(
         (subscriber) => (this.currentItem = subscriber[subscriber.length - 1])
@@ -57,10 +57,10 @@ export class AddNewMarkerComponent implements OnInit {
         saved: true,
       };
 
-      this.store.dispatch(save({ item: newMapItem }));
-      this.store.dispatch(changeCurrentItem({ currentItem: newMapItem }));
+      this._store.dispatch(save({ item: newMapItem }));
+      this._store.dispatch(changeCurrentItem({ currentItem: newMapItem }));
       this.closeWindow();
-      this.snackbar.openFromComponent(SnackbarComponent, {
+      this._snackbar.openFromComponent(SnackbarComponent, {
         duration: 3000,
         data: { message: 'מיקום נוסף בהצלחה', action: 'סגור' },
       });
@@ -68,8 +68,8 @@ export class AddNewMarkerComponent implements OnInit {
   }
 
   public cancel(): void {
-    this.store.dispatch(changeAddMode({ addMode: false }));
-    this.markersService.deleteMapItem(this.currentItem.id);
+    this._store.dispatch(changeAddMode({ addMode: false }));
+    this._markersService.deleteMapItem(this.currentItem.id);
     this.closeWindow();
   }
 
