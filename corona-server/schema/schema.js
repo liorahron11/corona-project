@@ -1,105 +1,88 @@
-const graphql = require("graphql");
-const { getAll, clean, addList } = require("../Services/MapItemsService");
-
-const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLFloat,
-  GraphQLSchema,
-  GraphQLList,
-  GraphQLInputObjectType,
-  GraphQLInt,
-  GraphQLBoolean,
-} = graphql;
-
-const MapItemType = new GraphQLObjectType({
-  name: "MapItem",
-  fields: () => ({
-    _id: { type: GraphQLString },
-    entity: { type: MarkerType },
-    actionType: { type: GraphQLInt },
-    saved: { type: GraphQLBoolean },
-  }),
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var graphql = require("graphql");
+var _a = require("../Services/MapItemsService"), getAll = _a.getAll, clean = _a.clean, addList = _a.addList;
+var GraphQLObjectType = graphql.GraphQLObjectType, GraphQLString = graphql.GraphQLString, GraphQLFloat = graphql.GraphQLFloat, GraphQLSchema = graphql.GraphQLSchema, GraphQLList = graphql.GraphQLList, GraphQLInputObjectType = graphql.GraphQLInputObjectType, GraphQLInt = graphql.GraphQLInt, GraphQLBoolean = graphql.GraphQLBoolean;
+var MapItemType = new GraphQLObjectType({
+    name: "MapItem",
+    fields: function () { return ({
+        _id: { type: GraphQLString },
+        entity: { type: MarkerType },
+        actionType: { type: GraphQLInt },
+        saved: { type: GraphQLBoolean },
+    }); },
 });
-
-const MarkerType = new GraphQLObjectType({
-  name: "Marker",
-  fields: () => ({
-    name: { type: GraphQLString },
-    position: { type: PositionType },
-  }),
+var MarkerType = new GraphQLObjectType({
+    name: "Marker",
+    fields: function () { return ({
+        name: { type: GraphQLString },
+        position: { type: PositionType },
+    }); },
 });
-
-const PositionType = new GraphQLObjectType({
-  name: "Position",
-  fields: () => ({
-    x: { type: GraphQLFloat },
-    y: { type: GraphQLFloat },
-    z: { type: GraphQLFloat },
-  }),
+var PositionType = new GraphQLObjectType({
+    name: "Position",
+    fields: function () { return ({
+        x: { type: GraphQLFloat },
+        y: { type: GraphQLFloat },
+        z: { type: GraphQLFloat },
+    }); },
 });
-
-const MapItemInput = new GraphQLInputObjectType({
-  name: "MapItemInput",
-  fields: () => ({
-    _id: { type: GraphQLString },
-    entity: { type: MarkerInput },
-    actionType: { type: GraphQLInt },
-    saved: { type: GraphQLBoolean },
-  }),
+var MapItemInput = new GraphQLInputObjectType({
+    name: "MapItemInput",
+    fields: function () { return ({
+        _id: { type: GraphQLString },
+        entity: { type: MarkerInput },
+        actionType: { type: GraphQLInt },
+        saved: { type: GraphQLBoolean },
+    }); },
 });
-
-const MarkerInput = new GraphQLInputObjectType({
-  name: "MarkerInput",
-  fields: () => ({
-    name: { type: GraphQLString },
-    position: { type: PositionInput },
-  }),
+var MarkerInput = new GraphQLInputObjectType({
+    name: "MarkerInput",
+    fields: function () { return ({
+        name: { type: GraphQLString },
+        position: { type: PositionInput },
+    }); },
 });
-
-const PositionInput = new GraphQLInputObjectType({
-  name: "PositionInput",
-  fields: () => ({
-    x: { type: GraphQLFloat },
-    y: { type: GraphQLFloat },
-    z: { type: GraphQLFloat },
-  }),
+var PositionInput = new GraphQLInputObjectType({
+    name: "PositionInput",
+    fields: function () { return ({
+        x: { type: GraphQLFloat },
+        y: { type: GraphQLFloat },
+        z: { type: GraphQLFloat },
+    }); },
 });
-
-const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
-  fields: {
-    Markers: {
-      type: new GraphQLList(MapItemType),
-      resolve(parent, args) {
-        return getAll();
-      },
+var RootQuery = new GraphQLObjectType({
+    name: "RootQueryType",
+    fields: {
+        Markers: {
+            type: new GraphQLList(MapItemType),
+            resolve: function () {
+                return getAll();
+            },
+        },
     },
-  },
 });
-
-const Mutation = new GraphQLObjectType({
-  name: "Mutation",
-  fields: {
-    clearMarkers: {
-      type: MapItemType,
-      resolve(parent) {
-        return clean();
-      },
+var Mutation = new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+        clearMarkers: {
+            type: MapItemType,
+            resolve: function () {
+                return clean();
+            },
+        },
+        setMarkers: {
+            type: MapItemType,
+            args: {
+                list: { type: new GraphQLList(MapItemInput) },
+            },
+            resolve: function (parent, args) {
+                return addList(args.list);
+            },
+        },
     },
-    setMarkers: {
-      type: MapItemType,
-      args: {
-        list: { type: new GraphQLList(MapItemInput) },
-      },
-      resolve: (parent, args) => {
-        return addList(args.list);
-      },
-    },
-  },
 });
-
-module.exports = new GraphQLSchema({
-  query: RootQuery,
-  mutation: Mutation,
+exports.default = new GraphQLSchema({
+    query: RootQuery,
+    mutation: Mutation,
 });

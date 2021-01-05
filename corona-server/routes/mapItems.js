@@ -1,16 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const { getAll, getById } = require("../Services/MapItemsService");
-
-router.get("/", (req, res) => {
-  getAll().then((markers, err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-    }
-
-    res.send(markers);
-  });
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = __importDefault(require("express"));
+var MapItemsService_1 = require("../Services/MapItemsService");
+var router = express_1.default.Router();
+router.get("/", function (req, res) {
+    MapItemsService_1.getAll().then(function (mapItemsList) {
+        res.send(mapItemsList);
+    });
 });
-
 module.exports = router;

@@ -12,11 +12,11 @@ export class EventBusService {
   on(event: Events, action: any): Subscription {
     return this._eventsSubject$
       .pipe(
-        filter((event: EmitEvent) => {
-          return event.name === event;
+        filter((emitEvent: EmitEvent) => {
+          return emitEvent.name === event;
         }),
-        map((event: EmitEvent) => {
-          return event.value;
+        map((emitEvent: EmitEvent) => {
+          return emitEvent.value;
         })
       )
       .subscribe(action);
